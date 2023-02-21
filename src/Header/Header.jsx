@@ -56,7 +56,7 @@ const Header = () => {
     const openMenu = (event) => setAnchorEl(event.currentTarget);
    
     return (
-        <AppBar position="static" sx={{ bgcolor: 'error.main' }}>
+        <AppBar position="sticky" sx={{ bgcolor: 'error.main' }}>
             <Toolbar>
                 <Container sx={{ display: { md: 'flex', justifyContent: 'space-between', alignItems: 'center' } }}>
                     <Drawer anchor="left" open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>

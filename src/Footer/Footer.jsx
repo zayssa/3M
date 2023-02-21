@@ -4,7 +4,7 @@ import { Facebook, Instagram, Telegram, Twitter } from '@mui/icons-material';
 
 const Footer = () => {
     return (
-        <AppBar position="static" sx={{ bgcolor: 'text.primary' }}>
+        <AppBar position="static" sx={{ bgcolor: 'text.primary', flexShrink: 0 }}>
             <Toolbar>
                 <Container sx={{ display: { md: 'flex', justifyContent: 'space-between'} }}>
                     <Box>
