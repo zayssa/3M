@@ -56,7 +56,7 @@ const Header = () => {
     const openMenu = (event) => setAnchorEl(event.currentTarget);
    
     return (
-        <AppBar position="sticky" sx={{ bgcolor: 'error.main' }}>
+        <AppBar position="sticky" sx={{ height: 100, bgcolor: 'lightblue', color: "black", paddingTop: 1 }}>
             <Toolbar>
                 <Container sx={{ display: { md: 'flex', justifyContent: 'space-between', alignItems: 'center' } }}>
                     <Drawer anchor="left" open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
@@ -73,7 +73,7 @@ const Header = () => {
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
-                        sx={{ mr: 2 }} onClick={() => setIsDrawerOpen(true)}>
+                        sx={{ mr: 3 }} onClick={() => setIsDrawerOpen(true)}>
                         <MenuIcon />
                     </IconButton>
 
@@ -81,9 +81,10 @@ const Header = () => {
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}>
-                        <Link href="../public/index.html" underline="none" color="inherit">
-                            Реактивные посты
+                        sx={{ display: { xs: 'none', sm: 'block', fontFamily: 'Pangolin' } }} textAlign='center' >
+                        <Link href="../public/index.html" sx={{ display: { sm: 'block' }, fontFamily: 'Pangolin' }} variant='h3' underline="none" color="text.primary" >REACT</Link>
+                        <Link href="../public/index.html" underline="none" color="gray">
+                            реактивные посты
                         </Link>
                     </Typography>
 
@@ -112,9 +113,7 @@ const Header = () => {
                         </Menu>
 
                     </Box>
-                </Container>
-                
-                
+                </Container>      
             </Toolbar>
         </AppBar>
     );

@@ -4,7 +4,8 @@ import { Box } from '@mui/material';
 import Header from '../Header/Header.jsx';
 import { postData } from './posts.js';
 import PostList from '../PostList/PostList';
-import Footer from '../Footer/Footer.jsx'
+import Footer from '../Footer/Footer.jsx';
+import Button from '../Button/Button.jsx'
 
 
 const App = () => {
@@ -12,7 +13,9 @@ const App = () => {
     <>
       <Box sx={{ display: { md: 'flex', flexDirection: 'column', minHeight: "100vh" } }}>
         <Header />
-        <Container sx={{ flexGrow: 1 }}>
+        <Container sx={{
+          flexGrow: 1 }}>
+          <Button />
           <PostList postsData={postData} />
         </Container>
         <Footer />
