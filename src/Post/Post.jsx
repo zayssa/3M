@@ -29,10 +29,12 @@ const ExpandMoreStyled = styled((props) => {
   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
   marginLeft: 'auto',
 }));
+
+
 const Post = ({
   image,
   title,
-  author: { email, avatar },
+  author: { name, avatar },
   text,
   created_at,
 }) => {
@@ -48,10 +50,10 @@ const Post = ({
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" src={avatar}>
-              {email?.slice(0, 1).toUpperCase()}
+              {name?.slice(0, 1).toUpperCase()}
             </Avatar>
           }
-          title={email}
+          title={name}
           subheader={dayjs(created_at).fromNow()}
         />
 

@@ -7,13 +7,13 @@ import { POSTS_PER_PAGE } from '../shared/constants';
 const PostList = ({ postsData }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const pagesCount = useMemo(() => {
-    return Math.ceil(postsData.length / POSTS_PER_PAGE);
+    return Math.ceil(postsData?.length / POSTS_PER_PAGE);
   }, [postsData]);
   const handlePageChange = useCallback((_, val) => setCurrentPage(val), []);
 
   const posts = useMemo(() => {
     const start = POSTS_PER_PAGE * (currentPage - 1);
-    return postsData.slice(start, start + POSTS_PER_PAGE);
+    return postsData?.slice(start, start + POSTS_PER_PAGE);
   }, [postsData, currentPage]);
 
   return (
