@@ -38,6 +38,19 @@ class Api {
             headers: this._headers,
         }).then(onResponse)
     }
+    changeLikePost(postId, isLike) {
+        return fetch(`${this._baseUrl}/posts/likes/${postId}`, {
+            method: isLike ? 'DELETE' : 'PUT',
+            headers: this._headers,
+        }).then(onResponse)
+    }
+
+    deletePost(postId) {
+        return fetch(`${this._baseUrl}/posts/${postId}`, {
+            method: 'DELETE',
+            headers: this._headers,
+        }).then(onResponse)
+    }
 }
 
 const config = {

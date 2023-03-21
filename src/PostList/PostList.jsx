@@ -4,7 +4,7 @@ import { Box, Grid, Pagination } from '@mui/material';
 import Post from '../Post/Post';
 import { POSTS_PER_PAGE } from '../shared/constants';
 
-const PostList = ({ postsData }) => {
+const PostList = ({ postsData, onPostLike, currentUser }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const pagesCount = useMemo(() => {
     return Math.ceil(postsData?.length / POSTS_PER_PAGE);
@@ -20,7 +20,12 @@ const PostList = ({ postsData }) => {
     <Box py={5}>
       <Grid container spacing={5}>
         {posts.map((item) => (
-          <Post key={item._id} {...item} />
+          <Post
+            key={item._id}
+            post={item}
+            onPostLike={onPostLike}
+            currentUser={currentUser}
+          />
         ))}
       </Grid>
 
