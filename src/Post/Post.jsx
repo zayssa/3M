@@ -1,23 +1,32 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   Avatar,
+  Badge,
   Card,
   CardActions,
   CardContent,
   CardHeader,
   CardMedia,
+  Chip,
   Collapse,
   Grid,
   IconButton,
   Typography,
 } from '@mui/material';
-import { Favorite, ExpandMore } from '@mui/icons-material';
+import {
+  Favorite,
+  ExpandMore,
+  Delete,
+  Comment as CommentIcon,
+} from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 import s from './Post.module.css';
+import { isLiked } from '../utils/post';
+import api from '../utils/api';
 
 dayjs.locale('ru');
 dayjs.extend(relativeTime);
@@ -30,38 +39,45 @@ const ExpandMoreStyled = styled((props) => {
   marginLeft: 'auto',
 }));
 
-
-const Post = ({
-  image,
-  title,
-  author: { name, avatar },
-  text,
-  created_at,
-}) => {
+const Post = ({ post, onPostLike, currentUser }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const isPostLiked = useMemo(
+    () => isLiked(post.likes, currentUser._id),
+    [post.likes, currentUser._id]
+  );
+
+  const handlePostLike = useCallback(() => {
+    onPostLike(post);
+  }, [post, onPostLike]);
+
+  const handlePostDelete = useCallback(
+    () => api.deletePost(post._id),
+    [post._id]
+  );
+
   return (
     <Grid container item xs={12} sm={6} md={4} lg={3}>
-      <Card className={s.card}>
+      <Card className={s.post}>
         <CardHeader
           avatar={
-            <Avatar aria-label="recipe" src={avatar}>
-              {name?.slice(0, 1).toUpperCase()}
+            <Avatar aria-label="recipe" src={post.author.avatar}>
+              {post.author.name?.slice(0, 1).toUpperCase()}
             </Avatar>
           }
-          title={name}
-          subheader={dayjs(created_at).fromNow()}
+          title={post.author.name}
+          subheader={dayjs(post.created_at).fromNow()}
         />
 
         <CardMedia
           component="img"
           height="194"
-          image={image}
-          alt={`Изображение_${title}`}
+          image={post.image}
+          alt={`Изображение_${post.title}`}
         />
 
         <CardContent
@@ -70,17 +86,50 @@ const Post = ({
           }}
         >
           <Typography variant="h5" component="h2" gutterBottom>
-            {title}
+            {post.title}
           </Typography>
 
           <Typography variant="body2" noWrap color="text.secondary">
-            {text}
+            {post.text}
           </Typography>
+
+          {post.tags &&
+            post.tags.map((tag) => (
+              <Chip
+                key={tag}
+                color="primary"
+                label={tag}
+                size="small"
+                sx={{ marginRight: 1 }}
+              />
+            ))}
         </CardContent>
 
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <Favorite />
+          <IconButton aria-label="add to favorites" onClick={handlePostLike}>
+            <Badge
+              badgeContent={post.likes.length}
+              color="primary"
+              size="small"
+            >
+              <Favorite color={isPostLiked ? 'error' : 'grey'} />
+            </Badge>
+          </IconButton>
+
+          {post.author._id === currentUser._id && (
+            <IconButton sx={{ marginLeft: 2 }} onClick={handlePostDelete}>
+              <Delete />
+            </IconButton>
+          )}
+
+          <IconButton aria-label="add to comments">
+            <Badge
+              badgeContent={post.comments.length}
+              color="primary"
+              size="small"
+            >
+              <CommentIcon />
+            </Badge>
           </IconButton>
 
           <ExpandMoreStyled
@@ -95,7 +144,7 @@ const Post = ({
 
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>{text}</Typography>
+            <Typography paragraph>{post.text}</Typography>
           </CardContent>
         </Collapse>
       </Card>
