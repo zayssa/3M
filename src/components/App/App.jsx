@@ -7,8 +7,10 @@ import Header from '../Header/Header.jsx';
 import PostList from '../PostList/PostList';
 import Footer from '../Footer/Footer.jsx';
 import Button from '../Button/Button.jsx';
-import api from '../utils/api';
-import { isLiked } from '../utils/post.js';
+import api from '../../utils/api';
+import { isLiked } from '../../utils/post.js';
+import { UserContext } from '../../context/UserContext';
+import { PostContext } from '../../context/PostContext';
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -61,23 +63,25 @@ const App = () => {
           minHeight: '100vh',
         }}
       >
-        <Header currentUser={currentUser} onPostsSearch={handlePostsSearch} />
+        <UserContext.Provider value={{ currentUser }}>
+          <PostContext.Provider
+            value={{ posts, handlePostLike, handlePostsSearch }}
+          >
+            <Header />
 
-        <Container
-          sx={{
-            flexGrow: 1,
-          }}
-        >
-          <Button />
+            <Container
+              sx={{
+                flexGrow: 1,
+              }}
+            >
+              <Button />
 
-          <PostList
-            postsData={posts}
-            onPostLike={handlePostLike}
-            currentUser={currentUser}
-          />
-        </Container>
+              <PostList />
+            </Container>
 
-        <Footer />
+            <Footer />
+          </PostContext.Provider>
+        </UserContext.Provider>
       </Box>
     </>
   );

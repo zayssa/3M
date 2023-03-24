@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useState } from 'react';
 import {
   AppBar,
@@ -22,8 +22,12 @@ import {
   Menu as MenuIcon,
 } from '@mui/icons-material';
 import User from '../User/User';
+import { PostContext } from '../../context/PostContext';
+import { UserContext } from '../../context/UserContext';
 
-const Header = ({ currentUser, onPostsSearch }) => {
+const Header = () => {
+  const { handlePostsSearch } = useContext(PostContext);
+  const { currentUser } = useContext(UserContext);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchValue, setSearchValue] = useState('');
@@ -35,8 +39,8 @@ const Header = ({ currentUser, onPostsSearch }) => {
   }, []);
 
   const handleSearch = useCallback(() => {
-    onPostsSearch(searchValue);
-  }, [searchValue, onPostsSearch]);
+    handlePostsSearch(searchValue);
+  }, [searchValue, handlePostsSearch]);
 
   const handleSearchKeyDown = useCallback(
     (evt) => {
