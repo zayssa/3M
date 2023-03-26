@@ -1,0 +1,22 @@
+.container {
+    width: 800px;
+    margin: 0 auto;
+}
+
+.post {
+    padding: 40px 0px;
+}
+
+.title {
+    margin-bottom: 50px;
+    font-size: 40px;
+}
+
+.image {
+    width: inherit;
+}
+
+.battonBack {
+    color: gray;
+    text-decoration: none;
+}
