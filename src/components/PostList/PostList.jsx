@@ -1,10 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Box, Grid, Pagination } from '@mui/material';
-
+import Button from "../Button/Button";
 import Post from '../Post/Post';
 import { POSTS_PER_PAGE } from '../shared/constants';
 import { useContext } from 'react';
 import { PostContext } from '../../context/PostContext';
+import NotFound from '../NotFound/NotFound';
+import { useNavigate } from 'react-router';
 
 const PostList = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,8 +21,19 @@ const PostList = () => {
     return posts?.slice(start, start + POSTS_PER_PAGE);
   }, [posts, currentPage]);
 
+  const navigate = useNavigate();
+
   return (
     <Box py={5}>
+      {!posts.length ? (
+        <NotFound
+          title="Простите, по вашему запросу постов не надено."
+          buttonText="Назад"
+          buttonAction={() => navigate(0)}
+        />
+      ) : (
+        <Button />
+      )}
       <Grid container spacing={5}>
         {postsCurrent?.map((item) => (
           <Post key={item._id} post={item} />

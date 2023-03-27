@@ -54,7 +54,7 @@ class Api {
 }
 
 const config = {
-    baseUrl: 'https://api.react-learning.ru',
+    baseUrl: 'https://api.react-learning.ru/v2/DN',
     headers: {
         'Content-Type': 'application/json',
         Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDA4NWE4OTRlZTQxOTk3NWZiZDJlZWEiLCJncm91cCI6IkROIiwiaWF0IjoxNjc4MjY5MTQ3LCJleHAiOjE3MDk4MDUxNDd9.blMfWXpvtILmDCTXFrmCYya2VZwAKC1rB5Q2kndKUQU'

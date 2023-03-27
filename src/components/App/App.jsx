@@ -2,15 +2,15 @@ import React from 'react';
 import { useEffect, useState, useCallback } from 'react';
 import { Container } from '@mui/material';
 import { Box } from '@mui/material';
-
 import Header from '../Header/Header.jsx';
-import PostList from '../PostList/PostList';
 import Footer from '../Footer/Footer.jsx';
-import Button from '../Button/Button.jsx';
 import api from '../../utils/api';
 import { isLiked } from '../../utils/post.js';
 import { UserContext } from '../../context/UserContext';
 import { PostContext } from '../../context/PostContext';
+import { Route, Routes } from 'react-router';
+import CatalogPage from "../../pages/CatalogPage/CatalogPage";
+import PostPage from '../../pages/PostPage/PostPage';
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -57,10 +57,10 @@ const App = () => {
       <Box
         sx={{
           display: {
-            md: 'flex',
+            md: "flex",
           },
-          flexDirection: 'column',
-          minHeight: '100vh',
+          flexDirection: "column",
+          minHeight: "100vh",
         }}
       >
         <UserContext.Provider value={{ currentUser }}>
@@ -74,9 +74,23 @@ const App = () => {
                 flexGrow: 1,
               }}
             >
-              <Button />
-
-              <PostList />
+              
+              <Routes>
+                <Route
+                  index
+                  element={
+                    <CatalogPage
+                      posts={posts}
+                      handlePostLike={handlePostLike}
+                      currentUser={currentUser}
+                    />
+                  }
+                />
+                <Route
+                  path="/post/:postId"
+                  element={<PostPage currentUser={currentUser} />}
+                />
+              </Routes>
             </Container>
 
             <Footer />
