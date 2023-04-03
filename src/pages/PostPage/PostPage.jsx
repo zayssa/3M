@@ -29,7 +29,13 @@ const PostPage = ({ currentUser }) => {
   }, []);
 
   return (
-    <>{isError ? <NotFoundPage /> : <PostContent post={post} {...post} />}</>
+    <>
+      {isError ? (
+        <NotFoundPage />
+      ) : (
+        <PostContent post={post} {...post} />
+      )}
+    </>
   );
 };
 
