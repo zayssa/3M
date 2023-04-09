@@ -2,23 +2,40 @@ import React, { useContext, useCallback } from "react";
 import cn from "classnames";
 import s from "./PostContent.module.css";
 import { useNavigate } from "react-router";
-import { Chip } from "@mui/material";
+import { Box, Button, Chip, Modal } from "@mui/material";
 import { Favorite } from "@mui/icons-material";
 import { isLiked } from "../../utils/post";
 import { UserContext } from "../../context/UserContext";
 import api from '../../utils/api';
+import EditPostForm from "../Forms/EditPostForm/EditPostForm";
 
 const PostContent = ({ title, image, text, created_at, likes, _id, tags, onPostLike }) => {
-  console.log("title", title);
   const navigate = useNavigate();
   const { currentUser } = useContext(UserContext);
 
   const liked = isLiked(likes, currentUser?._id);
 
-  // const handleChangePost = useCallback(
-  //   () => api.changePost(_id),
-  //   [_id]
-  // );
+  const handleChangePost = useCallback(
+    () => api.changePost(_id),
+    [_id]
+  );
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+
+
 
   return (
     <main className={cn(s.post, s.container)}>
@@ -54,6 +71,21 @@ const PostContent = ({ title, image, text, created_at, likes, _id, tags, onPostL
       {/* {author._id === currentUser._id && (
         <button onClick={handleChangePost}>Изменить</button>
       )} */}
+
+      
+      <Button onClick={handleOpen}>Редактировать</Button>
+
+      <Modal
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box sx={style}>
+          <EditPostForm title={title} text={text} image={image} />
+        </Box>
+      </Modal>
     </main>
   );
 };
