@@ -16,29 +16,11 @@
     width: inherit;
 }
 
-.battonBack {
+.buttonBack {
     color: gray;
     text-decoration: none;
 }
 
-.battonBack:hover {
+.buttonBack:hover {
     color: black;
-}
-
-.favorite {
-    background-color: transparent;
-    border: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    cursor: pointer;
-}
-
-.favorite:hover {
-    opacity: 0.6;
-}
-
-.favoriteActive svg {
-    fill: #dc0404;
 }

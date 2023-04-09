@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Box, Grid, Pagination } from '@mui/material';
-import Button from "../Button/Button";
+import Button from '../Button/Button';
 import Post from '../Post/Post';
 import { POSTS_PER_PAGE } from '../shared/constants';
 import { useContext } from 'react';
@@ -27,7 +27,7 @@ const PostList = () => {
     <Box py={5}>
       {!posts.length ? (
         <NotFound
-          title="Простите, по вашему запросу постов не надено."
+          title="Простите, по вашему запросу постов не найдено."
           buttonText="Назад"
           buttonAction={() => navigate(0)}
         />
