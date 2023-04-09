@@ -1,18 +1,17 @@
-import React from "react";
-import { useParams } from "react-router";
-import PostContent from "../../components/PostContent/PostContent";
-import api from "../../utils/api";
-import { useEffect, useState } from "react";
-import NotFoundPage from '../NotFoundPage/NotFoundPage'
+import React, { useCallback } from 'react';
+import { useParams } from 'react-router';
+import PostContent from '../../components/PostContent/PostContent';
+import api from '../../utils/api';
+import { useEffect, useState } from 'react';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
-
-const PostPage = ({ currentUser }) => {
+const PostPage = () => {
   const { postId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [post, setPost] = useState([]);
 
-  useEffect(() => {
+  const reloadPostData = useCallback(() => {
     setIsLoading(true);
     api
       .getPostById(postId)
@@ -20,22 +19,22 @@ const PostPage = ({ currentUser }) => {
         setPost(postData);
       })
       .catch((err) => {
-        console.error(err)
+        console.error(err);
         setIsError(true);
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [postId]);
 
-  return (
-    <>
-      {isError ? (
-        <NotFoundPage />
-      ) : (
-        <PostContent post={post} {...post} />
-      )}
-    </>
+  useEffect(() => {
+    reloadPostData();
+  }, [reloadPostData]);
+
+  return isError ? (
+    <NotFoundPage />
+  ) : (
+    <PostContent post={post} onPostDataChange={reloadPostData} />
   );
 };
 

@@ -9,7 +9,7 @@ import { isLiked } from '../../utils/post.js';
 import { UserContext } from '../../context/UserContext';
 import { PostContext } from '../../context/PostContext';
 import { Route, Routes } from 'react-router';
-import CatalogPage from "../../pages/CatalogPage/CatalogPage";
+import CatalogPage from '../../pages/CatalogPage/CatalogPage';
 import PostPage from '../../pages/PostPage/PostPage';
 
 const App = () => {
@@ -33,7 +33,7 @@ const App = () => {
   }, []);
 
   const handlePostLike = useCallback(
-    (post) => {
+    async (post) => {
       if (!currentUser) {
         return;
       }
@@ -57,10 +57,10 @@ const App = () => {
       <Box
         sx={{
           display: {
-            md: "flex",
+            md: 'flex',
           },
-          flexDirection: "column",
-          minHeight: "100vh",
+          flexDirection: 'column',
+          minHeight: '100vh',
         }}
       >
         <UserContext.Provider value={{ currentUser }}>
@@ -74,7 +74,6 @@ const App = () => {
                 flexGrow: 1,
               }}
             >
-              
               <Routes>
                 <Route
                   index
@@ -86,10 +85,7 @@ const App = () => {
                     />
                   }
                 />
-                <Route
-                  path="/post/:postId"
-                  element={<PostPage currentUser={currentUser} />}
-                />
+                <Route path="/post/:postId" element={<PostPage />} />
               </Routes>
             </Container>
 

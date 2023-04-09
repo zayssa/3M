@@ -1,51 +1,145 @@
-import React from "react";
-import s from "./CreateFormPost.module.css";
-import { useForm } from "react-hook-form";
-import { Button } from "@mui/material";
+import React, { useCallback, useEffect } from 'react';
+import s from './CreateFormPost.module.css';
+import { useForm } from 'react-hook-form';
+import api from '../../../utils/api';
+import { Button, Paper, TextField, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 
-const CreatePostForm = () => {
-  const { register, handleSubmit, formState: {errors} } = useForm({mode: 'onBlur'});
+const CreatePostForm = ({ handleClose, postData, onSave }) => {
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      title: postData?.title,
+      text: postData?.text,
+      image: postData?.image,
+      tags: postData?.tags?.join(','),
+    },
+  });
 
-  console.log("errors", errors);
+  useEffect(() => {
+    reset({
+      title: postData?.title,
+      text: postData?.text,
+      image: postData?.image,
+      tags: postData?.tags?.join(','),
+    });
+  }, [postData, reset]);
+
+  const onSubmitHandler = useCallback(
+    async (newData) => {
+      console.log(newData);
+      if (!postData) {
+        return api.addNewPost(newData);
+      }
+      return api.changePost(postData._id, newData).then(() => {
+        if (onSave) {
+          onSave();
+        }
+      });
+    },
+    [postData, onSave]
+  );
+
   const onSubmit = (data) => {
-    console.log(data);
+    onSubmitHandler({
+      ...data,
+      tags: data.tags
+        .split(',')
+        .map((word) => word.replace(/^\s+|\s+$/g, ''))
+        .filter((word) => word !== ''),
+    });
+    handleClose(true);
   };
 
   return (
-    <form method="post" className={s.form} onSubmit={handleSubmit(onSubmit)}>
-      <h3 className={s.title}>Новый пост</h3>
-      <input
-        type="text"
-        placeholder="Заголовок"
-        {...register("title", {
-          required: "Обязательное поле",
-        })}
-      />
-      {errors && errors.title ? (
-        <div>
-          <p className={s.errorMessage}>{errors.title.message}</p>
-        </div>
-      ) : null}
-      <textarea
-        type="text"
-        placeholder="Описание"
-        {...register("description", {
-          required: "Обязательное поле",
-        })}
-      />
-      {errors && errors.description ? (
-        <div>
-          <p className={s.errorMessage}>{errors.description.message}</p>
-        </div>
-      ) : null}
-      <input
-        type="text"
-        placeholder="Ссылка на картинку"
-        {...register("picture")}
-      />
-
-      <button className={s.btn}>Создать пост</button>
-    </form>
+    <Paper
+      sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        p: 4,
+        pt: 3,
+      }}
+    >
+      <form method="post" onSubmit={handleSubmit(onSubmit)}>
+        <Typography variant="h5" align="center">
+          {!postData ? 'Новый пост' : 'Редактирование поста'}
+        </Typography>
+        <Box my={2}>
+          <TextField
+            type="text"
+            size="small"
+            fullWidth
+            placeholder="Заголовок"
+            {...register('title', {
+              required: 'Поле не может быть пустым',
+            })}
+            error={errors?.title}
+            helperText={errors?.title && errors.title.message}
+          />
+        </Box>
+        <Box my={2}>
+          <TextField
+            type="text"
+            size="small"
+            fullWidth
+            multiline
+            maxRows={5}
+            placeholder="Описание"
+            {...register('text', {
+              required: 'Поле не может быть пустым',
+            })}
+            error={errors?.text}
+            helperText={errors?.text && errors.text.message}
+          />
+          {errors && errors.description ? (
+            <div>
+              <p className={s.errorMessage}>{errors.text.message}</p>
+            </div>
+          ) : null}
+        </Box>
+        <Box my={2}>
+          <TextField
+            type="text"
+            size="small"
+            fullWidth
+            placeholder="Ссылка на картинку"
+            {...register('image')}
+          />
+        </Box>
+        <Box my={2}>
+          <TextField
+            type="text"
+            size="small"
+            fullWidth
+            placeholder="Введите теги через запятую"
+            {...register('tags')}
+          />
+        </Box>
+        <Box my={2}>
+          <Button type="submit" fullWidth color="primary" variant="contained">
+            {postData ? 'Сохранить' : 'Создать'}&nbsp;пост
+          </Button>
+        </Box>
+        <Box my={2}>
+          <Button
+            fullWidth
+            color="error"
+            variant="outlined"
+            onClick={handleClose}
+          >
+            Отмена
+          </Button>
+        </Box>
+      </form>
+    </Paper>
   );
 };
 
