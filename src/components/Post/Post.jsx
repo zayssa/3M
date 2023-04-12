@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import {
   Avatar,
   Badge,
@@ -24,9 +24,12 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
+import { UserContext } from '../../context/UserContext';
+import { PostContext } from '../../context/PostContext';
 import s from './Post.module.css';
-import { isLiked } from '../utils/post';
-import api from '../utils/api';
+import { isLiked } from '../../utils/post';
+import api from '../../utils/api';
+import { Link } from 'react-router-dom';
 
 dayjs.locale('ru');
 dayjs.extend(relativeTime);
@@ -39,7 +42,10 @@ const ExpandMoreStyled = styled((props) => {
   marginLeft: 'auto',
 }));
 
-const Post = ({ post, onPostLike, currentUser }) => {
+const Post = ({ post }) => {
+  const { handlePostLike } = useContext(PostContext);
+  const { currentUser } = useContext(UserContext);
+
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -51,16 +57,14 @@ const Post = ({ post, onPostLike, currentUser }) => {
     [post.likes, currentUser._id]
   );
 
-  const handlePostLike = useCallback(() => {
-    onPostLike(post);
-  }, [post, onPostLike]);
+  const handleLike = useCallback(() => {
+    handlePostLike(post);
+  }, [post, handlePostLike]);
 
-  const handlePostDelete = useCallback(
-    () => api.deletePost(post._id),
-    [post._id]
-  );
+  const handleDelete = useCallback(() => api.deletePost(post._id), [post._id]);
 
   return (
+    
     <Grid container item xs={12} sm={6} md={4} lg={3}>
       <Card className={s.post}>
         <CardHeader
@@ -72,52 +76,52 @@ const Post = ({ post, onPostLike, currentUser }) => {
           title={post.author.name}
           subheader={dayjs(post.created_at).fromNow()}
         />
+        <Link to={`/post/${post._id}`} className={s.postHeaderLink}>
+          <CardMedia
+            component="img"
+            height="194"
+            image={post.image}
+            alt={`Изображение_${post.title}`}
+          />
+          <CardContent
+            sx={{
+              flex: 1,
+            }}
+          >
+            <Typography variant="h5" component="h2" gutterBottom>
+              {post.title}
+            </Typography>
 
-        <CardMedia
-          component="img"
-          height="194"
-          image={post.image}
-          alt={`Изображение_${post.title}`}
-        />
+            <Typography variant="body2" noWrap color="text.secondary">
+              {post.text}
+            </Typography>
 
-        <CardContent
-          sx={{
-            flex: 1,
-          }}
-        >
-          <Typography variant="h5" component="h2" gutterBottom>
-            {post.title}
-          </Typography>
-
-          <Typography variant="body2" noWrap color="text.secondary">
-            {post.text}
-          </Typography>
-
-          {post.tags &&
-            post.tags.map((tag) => (
-              <Chip
-                key={tag}
-                color="primary"
-                label={tag}
-                size="small"
-                sx={{ marginRight: 1 }}
-              />
-            ))}
-        </CardContent>
+            {post.tags &&
+              post.tags.map((tag, idx) => (
+                <Chip
+                  key={idx}
+                  color="primary"
+                  label={tag}
+                  size="small"
+                  sx={{ marginRight: 1 }}
+                />
+              ))}
+          </CardContent>
+        </Link>
 
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites" onClick={handlePostLike}>
+          <IconButton aria-label="add to favorites" onClick={handleLike}>
             <Badge
               badgeContent={post.likes.length}
               color="primary"
               size="small"
             >
-              <Favorite color={isPostLiked ? 'error' : 'grey'} />
+              <Favorite color={isPostLiked ? "error" : "grey"} />
             </Badge>
           </IconButton>
 
           {post.author._id === currentUser._id && (
-            <IconButton sx={{ marginLeft: 2 }} onClick={handlePostDelete}>
+            <IconButton sx={{ marginLeft: 2 }} onClick={handleDelete}>
               <Delete />
             </IconButton>
           )}

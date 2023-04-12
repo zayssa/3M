@@ -2,13 +2,15 @@ import React from 'react';
 import { useEffect, useState, useCallback } from 'react';
 import { Container } from '@mui/material';
 import { Box } from '@mui/material';
-
 import Header from '../Header/Header.jsx';
-import PostList from '../PostList/PostList';
 import Footer from '../Footer/Footer.jsx';
-import Button from '../Button/Button.jsx';
-import api from '../utils/api';
-import { isLiked } from '../utils/post.js';
+import api from '../../utils/api';
+import { isLiked } from '../../utils/post.js';
+import { UserContext } from '../../context/UserContext';
+import { PostContext } from '../../context/PostContext';
+import { Route, Routes } from 'react-router';
+import CatalogPage from '../../pages/CatalogPage/CatalogPage';
+import PostPage from '../../pages/PostPage/PostPage';
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -31,7 +33,7 @@ const App = () => {
   }, []);
 
   const handlePostLike = useCallback(
-    (post) => {
+    async (post) => {
       if (!currentUser) {
         return;
       }
@@ -61,23 +63,35 @@ const App = () => {
           minHeight: '100vh',
         }}
       >
-        <Header currentUser={currentUser} onPostsSearch={handlePostsSearch} />
+        <UserContext.Provider value={{ currentUser }}>
+          <PostContext.Provider
+            value={{ posts, handlePostLike, handlePostsSearch }}
+          >
+            <Header />
 
-        <Container
-          sx={{
-            flexGrow: 1,
-          }}
-        >
-          <Button />
+            <Container
+              sx={{
+                flexGrow: 1,
+              }}
+            >
+              <Routes>
+                <Route
+                  index
+                  element={
+                    <CatalogPage
+                      posts={posts}
+                      handlePostLike={handlePostLike}
+                      currentUser={currentUser}
+                    />
+                  }
+                />
+                <Route path="/post/:postId" element={<PostPage />} />
+              </Routes>
+            </Container>
 
-          <PostList
-            postsData={posts}
-            onPostLike={handlePostLike}
-            currentUser={currentUser}
-          />
-        </Container>
-
-        <Footer />
+            <Footer />
+          </PostContext.Provider>
+        </UserContext.Provider>
       </Box>
     </>
   );

@@ -1,0 +1,9 @@
+.post {
+    display: flex;
+    flex-direction: column;
+}
+
+.postHeaderLink {
+    text-decoration: none;
+    color: inherit;
+}

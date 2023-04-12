@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useState } from 'react';
 import {
   AppBar,
@@ -22,8 +22,13 @@ import {
   Menu as MenuIcon,
 } from '@mui/icons-material';
 import User from '../User/User';
+import { PostContext } from '../../context/PostContext';
+import { UserContext } from '../../context/UserContext';
+import { Routes, Route } from "react-router";
 
-const Header = ({ currentUser, onPostsSearch }) => {
+const Header = () => {
+  const { handlePostsSearch } = useContext(PostContext);
+  const { currentUser } = useContext(UserContext);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchValue, setSearchValue] = useState('');
@@ -35,8 +40,8 @@ const Header = ({ currentUser, onPostsSearch }) => {
   }, []);
 
   const handleSearch = useCallback(() => {
-    onPostsSearch(searchValue);
-  }, [searchValue, onPostsSearch]);
+    handlePostsSearch(searchValue);
+  }, [searchValue, handlePostsSearch]);
 
   const handleSearchKeyDown = useCallback(
     (evt) => {
@@ -50,7 +55,7 @@ const Header = ({ currentUser, onPostsSearch }) => {
   return (
     <AppBar
       position="sticky"
-      sx={{ height: 100, bgcolor: 'lightblue', color: 'black', paddingTop: 1 }}
+      sx={{ height: 100, bgcolor: "lightblue", color: "black", paddingTop: 1 }}
     >
       <Toolbar>
         <Container>
@@ -58,9 +63,9 @@ const Header = ({ currentUser, onPostsSearch }) => {
             container
             sx={{
               display: {
-                md: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
+                md: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               },
             }}
           >
@@ -68,7 +73,7 @@ const Header = ({ currentUser, onPostsSearch }) => {
               item
               lg={4}
               md={4}
-              sx={{ display: { md: 'flex', alignItems: 'center' } }}
+              sx={{ display: { md: "flex", alignItems: "center" } }}
             >
               <Drawer
                 anchor="left"
@@ -80,7 +85,7 @@ const Header = ({ currentUser, onPostsSearch }) => {
                   width="300px"
                   textAlign="center"
                   role="presentation"
-                  sx={{ display: 'flex', flexDirection: 'column' }}
+                  sx={{ display: "flex", flexDirection: "column" }}
                 >
                   <Link
                     href="../public/index.html"
@@ -133,13 +138,13 @@ const Header = ({ currentUser, onPostsSearch }) => {
                 noWrap
                 component="div"
                 sx={{
-                  display: { xs: 'none', sm: 'block', fontFamily: 'Pangolin' },
+                  display: { xs: "none", sm: "block", fontFamily: "Pangolin" },
                 }}
                 textAlign="center"
               >
                 <Link
                   href="../public/index.html"
-                  sx={{ display: { sm: 'block' }, fontFamily: 'Pangolin' }}
+                  sx={{ display: { sm: "block" }, fontFamily: "Pangolin" }}
                   variant="h3"
                   underline="none"
                   color="text.primary"
@@ -156,20 +161,27 @@ const Header = ({ currentUser, onPostsSearch }) => {
               item
               lg={4}
               md={4}
-              sx={{ display: { md: 'flex', alignItems: 'center' } }}
+              sx={{ display: { md: "flex", alignItems: "center" } }}
             >
-              <Input
-                endAdornment={
-                  <IconButton onClick={handleSearch}>
-                    <SearchIcon />
-                  </IconButton>
-                }
-                placeholder="Search…"
-                aria-label="search"
-                onKeyDown={handleSearchKeyDown}
-                value={searchValue}
-                onChange={handleSearchChange}
-              ></Input>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <Input
+                      endAdornment={
+                        <IconButton onClick={handleSearch}>
+                          <SearchIcon />
+                        </IconButton>
+                      }
+                      placeholder="Search…"
+                      aria-label="search"
+                      onKeyDown={handleSearchKeyDown}
+                      value={searchValue}
+                      onChange={handleSearchChange}
+                    ></Input>
+                  }
+                />
+              </Routes>
             </Grid>
             <Box sx={{ flexGrow: 1 }} />
 
@@ -177,7 +189,7 @@ const Header = ({ currentUser, onPostsSearch }) => {
               item
               lg={4}
               md={4}
-              sx={{ display: { xs: 'none', md: 'flex', alignItems: 'center' } }}
+              sx={{ display: { xs: "none", md: "flex", alignItems: "center" } }}
             >
               <IconButton size="large" aria-label="favorite" color="inherit">
                 <Favorite />
@@ -200,8 +212,8 @@ const Header = ({ currentUser, onPostsSearch }) => {
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
               >
                 <MenuItem onClick={handleClose}>Оповещение №1</MenuItem>
                 <MenuItem onClick={handleClose}>Оповещение №2</MenuItem>
