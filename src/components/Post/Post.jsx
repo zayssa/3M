@@ -43,7 +43,7 @@ const ExpandMoreStyled = styled((props) => {
 }));
 
 const Post = ({ post }) => {
-  const { handlePostLike } = useContext(PostContext);
+  const { getPostsList, handlePostLike } = useContext(PostContext);
   const { currentUser } = useContext(UserContext);
 
   const [expanded, setExpanded] = useState(false);
@@ -61,10 +61,13 @@ const Post = ({ post }) => {
     handlePostLike(post);
   }, [post, handlePostLike]);
 
-  const handleDelete = useCallback(() => api.deletePost(post._id), [post._id]);
+  const handleDelete = useCallback(() => {
+    api.deletePost(post._id).then(() => {
+      getPostsList();
+    });
+  }, [post._id, getPostsList]);
 
   return (
-    
     <Grid container item xs={12} sm={6} md={4} lg={3}>
       <Card className={s.post}>
         <CardHeader
@@ -76,7 +79,7 @@ const Post = ({ post }) => {
           title={post.author.name}
           subheader={dayjs(post.created_at).fromNow()}
         />
-        <Link to={`/post/${post._id}`} className={s.postHeaderLink}>
+        <Link to={`/posts/${post._id}`} className={s.postHeaderLink}>
           <CardMedia
             component="img"
             height="194"
@@ -116,7 +119,7 @@ const Post = ({ post }) => {
               color="primary"
               size="small"
             >
-              <Favorite color={isPostLiked ? "error" : "grey"} />
+              <Favorite color={isPostLiked ? 'error' : 'grey'} />
             </Badge>
           </IconButton>
 

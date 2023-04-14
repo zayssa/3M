@@ -1,11 +1,26 @@
-import React, { useCallback, useEffect } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import s from './CreateFormPost.module.css';
 import { useForm } from 'react-hook-form';
 import api from '../../../utils/api';
-import { Button, Paper, TextField, Typography } from '@mui/material';
+import {
+  Button,
+  IconButton,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Box } from '@mui/system';
+import { Close as CloseIcon } from '@mui/icons-material';
+import { PostContext } from '../../../context/PostContext';
 
-const CreatePostForm = ({ handleClose, postData, onSave }) => {
+const CreatePostForm = forwardRef(({ handleClose, postData, onSave }, ref) => {
+  const { getPostsList } = useContext(PostContext);
   const {
     register,
     reset,
@@ -32,9 +47,10 @@ const CreatePostForm = ({ handleClose, postData, onSave }) => {
 
   const onSubmitHandler = useCallback(
     async (newData) => {
-      console.log(newData);
       if (!postData) {
-        return api.addNewPost(newData);
+        return api.addNewPost(newData).then(() => {
+          getPostsList();
+        });
       }
       return api.changePost(postData._id, newData).then(() => {
         if (onSave) {
@@ -42,7 +58,7 @@ const CreatePostForm = ({ handleClose, postData, onSave }) => {
         }
       });
     },
-    [postData, onSave]
+    [postData, onSave, getPostsList]
   );
 
   const onSubmit = (data) => {
@@ -55,6 +71,17 @@ const CreatePostForm = ({ handleClose, postData, onSave }) => {
     });
     handleClose(true);
   };
+
+  useImperativeHandle(ref, () => ({
+    resetForm() {
+      reset({
+        title: '',
+        text: '',
+        image: '',
+        tags: '',
+      });
+    },
+  }));
 
   return (
     <Paper
@@ -72,6 +99,18 @@ const CreatePostForm = ({ handleClose, postData, onSave }) => {
         <Typography variant="h5" align="center">
           {!postData ? 'Новый пост' : 'Редактирование поста'}
         </Typography>
+
+        <IconButton
+          sx={{
+            position: 'absolute',
+            top: 10,
+            right: 10,
+          }}
+          onClick={handleClose}
+        >
+          <CloseIcon />
+        </IconButton>
+
         <Box my={2}>
           <TextField
             type="text"
@@ -141,6 +180,6 @@ const CreatePostForm = ({ handleClose, postData, onSave }) => {
       </form>
     </Paper>
   );
-};
+});
 
 export default CreatePostForm;

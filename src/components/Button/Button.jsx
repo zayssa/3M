@@ -1,16 +1,15 @@
-import React from 'react';
-import {
-  Button as ButtonMui,
-  Box,
-  Link,
-  Typography,
-  Modal,
-} from '@mui/material';
+import React, { useRef } from 'react';
+import { Button as ButtonMui, Box, Typography, Modal } from '@mui/material';
+
 import CreatePostForm from '../Forms/CreatePostForm/CreatePostForm';
 
 const Button = () => {
+  const postEditForm = useRef();
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true);
+    postEditForm.current.resetForm();
+  };
   const handleClose = () => setOpen(false);
 
   return (
@@ -22,12 +21,6 @@ const Button = () => {
         marginBottom: 10,
       }}
     >
-      <Link href="../public/index.html" underline="none" color="black">
-        Главная
-      </Link>
-      <Link underline="none" color="gray">
-        Все посты
-      </Link>
       <Typography
         sx={{
           fontFamily: 'Pangolin',
@@ -53,7 +46,7 @@ const Button = () => {
         aria-describedby="keep-mounted-modal-description"
       >
         <div>
-          <CreatePostForm handleClose={handleClose} />
+          <CreatePostForm handleClose={handleClose} ref={postEditForm} />
         </div>
       </Modal>
     </Box>

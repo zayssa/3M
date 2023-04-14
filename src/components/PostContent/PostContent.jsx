@@ -1,13 +1,21 @@
 import React, { useContext, useCallback } from 'react';
-import cn from 'classnames';
-import s from './PostContent.module.css';
 import { useNavigate } from 'react-router';
-import { Button, Chip, Grid, Modal } from '@mui/material';
-import { Favorite, FavoriteOutlined } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+import { Button, Chip, Grid, Modal, IconButton, Box } from '@mui/material';
+import { Favorite, FavoriteOutlined, Delete } from '@mui/icons-material';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+
 import { isLiked } from '../../utils/post';
 import { UserContext } from '../../context/UserContext';
 import { PostContext } from '../../context/PostContext';
 import CreatePostForm from '../Forms/CreatePostForm/CreatePostForm';
+import api from '../../utils/api';
+import s from './PostContent.module.css';
+
+dayjs.locale('ru');
+dayjs.extend(localizedFormat);
 
 const PostContent = ({ post, onPostDataChange }) => {
   const navigate = useNavigate();
@@ -26,15 +34,19 @@ const PostContent = ({ post, onPostDataChange }) => {
     });
   }, [post, handlePostLike, onPostDataChange]);
 
+  const handleDelete = useCallback(() => api.deletePost(post._id), [post._id]);
+
   return (
-    <main className={cn(s.post, s.container)}>
-      <a className={s.buttonBack} href="/" onClick={() => navigate(-1)}>
+    <Box pb={5} component="main" className={s.container}>
+      <Link className={s.buttonBack} href="/" onClick={() => navigate(-1)}>
         Назад
-      </a>
+      </Link>
       <h2 className={s.title}>{post.title}</h2>
       <img className={s.image} src={post.image} alt="post illustration" />
       <p>{post.text}</p>
-      {post.created_at && <p>{`Создано ${post.created_at}`}</p>}
+      {post.created_at && (
+        <p>{`Создано ${dayjs(post.created_at).format('LLL')}`}</p>
+      )}
       {post.author && <p>{`Автор: ${post.author.name}`}</p>}
       <Grid container spacing={2} alignItems="center">
         <Grid item xs>
@@ -65,6 +77,13 @@ const PostContent = ({ post, onPostDataChange }) => {
         </Grid>
         <Grid item>
           {post.author?._id === currentUser?._id && (
+            <IconButton sx={{ marginLeft: 2 }} onClick={handleDelete}>
+              <Delete />
+            </IconButton>
+          )}
+        </Grid>
+        <Grid item>
+          {post.author?._id === currentUser?._id && (
             <Button variant="contained" color="primary" onClick={handleOpen}>
               Изменить
             </Button>
@@ -86,7 +105,7 @@ const PostContent = ({ post, onPostDataChange }) => {
           />
         </div>
       </Modal>
-    </main>
+    </Box>
   );
 };
 

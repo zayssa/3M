@@ -1,30 +1,36 @@
 import React from 'react';
 import { useEffect, useState, useCallback } from 'react';
+import { Navigate, Outlet, Route, Routes } from 'react-router';
 import { Container } from '@mui/material';
 import { Box } from '@mui/material';
+
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import api from '../../utils/api';
 import { isLiked } from '../../utils/post.js';
 import { UserContext } from '../../context/UserContext';
 import { PostContext } from '../../context/PostContext';
-import { Route, Routes } from 'react-router';
 import CatalogPage from '../../pages/CatalogPage/CatalogPage';
 import PostPage from '../../pages/PostPage/PostPage';
+import Breadcrumbs from '../Breadcrumbs/Breadcrumbs.jsx';
 
 const App = () => {
   const [posts, setPosts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-  useEffect(() => {
+  const getPostsList = useCallback(() => {
     api.getPostList().then((postData) => {
       setPosts(postData);
     });
+  }, []);
+
+  useEffect(() => {
+    getPostsList();
 
     api.getUserInfo().then((userData) => {
       setCurrentUser(userData);
     });
-  }, []);
+  }, [getPostsList]);
 
   const handlePostsSearch = useCallback((searchValue) => {
     api.search(searchValue).then((postData) => {
@@ -53,47 +59,57 @@ const App = () => {
   );
 
   return (
-    <>
-      <Box
-        sx={{
-          display: {
-            md: 'flex',
-          },
-          flexDirection: 'column',
-          minHeight: '100vh',
-        }}
-      >
-        <UserContext.Provider value={{ currentUser }}>
-          <PostContext.Provider
-            value={{ posts, handlePostLike, handlePostsSearch }}
+    <Box
+      sx={{
+        display: {
+          md: 'flex',
+        },
+        flexDirection: 'column',
+        minHeight: '100vh',
+      }}
+    >
+      <UserContext.Provider value={{ currentUser }}>
+        <PostContext.Provider
+          value={{ posts, getPostsList, handlePostLike, handlePostsSearch }}
+        >
+          <Header />
+
+          <Container
+            sx={{
+              flexGrow: 1,
+            }}
           >
-            <Header />
+            <Routes>
+              <Route
+                element={
+                  <>
+                    <Breadcrumbs />
+                    <Outlet />
+                  </>
+                }
+              >
+                <Route index element={<Navigate to="/posts" replace />} />
+                <Route path="/posts/">
+                  <Route
+                    index
+                    element={
+                      <CatalogPage
+                        posts={posts}
+                        handlePostLike={handlePostLike}
+                        currentUser={currentUser}
+                      />
+                    }
+                  />
+                  <Route path=":postId" element={<PostPage />} />
+                </Route>
+              </Route>
+            </Routes>
+          </Container>
 
-            <Container
-              sx={{
-                flexGrow: 1,
-              }}
-            >
-              <Routes>
-                <Route
-                  index
-                  element={
-                    <CatalogPage
-                      posts={posts}
-                      handlePostLike={handlePostLike}
-                      currentUser={currentUser}
-                    />
-                  }
-                />
-                <Route path="/post/:postId" element={<PostPage />} />
-              </Routes>
-            </Container>
-
-            <Footer />
-          </PostContext.Provider>
-        </UserContext.Provider>
-      </Box>
-    </>
+          <Footer />
+        </PostContext.Provider>
+      </UserContext.Provider>
+    </Box>
   );
 };
 
