@@ -13,10 +13,14 @@ import { PostContext } from '../../context/PostContext';
 import CatalogPage from '../../pages/CatalogPage/CatalogPage';
 import PostPage from '../../pages/PostPage/PostPage';
 import Breadcrumbs from '../Breadcrumbs/Breadcrumbs.jsx';
+import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
+import FavouritesPage from '../../pages/FavouritesPage/FavouritesPage';
+import AboutPage from '../../pages/AboutPage/AboutPage';
 
 const App = () => {
   const [posts, setPosts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
+  const [favourites, setFavourites] = useState([]);
 
   const getPostsList = useCallback(() => {
     api.getPostList().then((postData) => {
@@ -32,6 +36,13 @@ const App = () => {
     });
   }, [getPostsList]);
 
+  useEffect(() => {
+    const favouritesProducts = posts?.filter((item) =>
+      isLiked(item.likes, currentUser._id)
+    );
+    setFavourites(favouritesProducts);
+  }, [currentUser, posts]);
+
   const handlePostsSearch = useCallback((searchValue) => {
     api.search(searchValue).then((postData) => {
       setPosts(postData);
@@ -44,12 +55,19 @@ const App = () => {
         return;
       }
 
-      const liked = isLiked(post.likes, currentUser._id); //ищем в массиве лайков id текущего пользователя.
+      const liked = isLiked(post.likes, currentUser._id);
       return api.changeLikePost(post._id, liked).then((newPost) => {
-        // в зависимости от того есть ли лайки или нет отправляем запрос "DELETE" или "PUT"
         const newPosts = posts.map((post) => {
           return post._id === newPost._id ? newPost : post;
         });
+
+        if (!liked) {
+          setFavourites((prevState) => [...prevState, newPost]);
+        } else {
+          setFavourites((prevState) =>
+            prevState.filter((post) => post._id !== newPost._id)
+          );
+        }
 
         setPosts(newPosts);
         return newPost;
@@ -70,7 +88,13 @@ const App = () => {
     >
       <UserContext.Provider value={{ currentUser }}>
         <PostContext.Provider
-          value={{ posts, getPostsList, handlePostLike, handlePostsSearch }}
+          value={{
+            posts,
+            favourites,
+            getPostsList,
+            handlePostLike,
+            handlePostsSearch,
+          }}
         >
           <Header />
 
@@ -102,6 +126,9 @@ const App = () => {
                   />
                   <Route path=":postId" element={<PostPage />} />
                 </Route>
+                <Route path="/favourites" element={<FavouritesPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="*" element={<NotFoundPage />} />
               </Route>
             </Routes>
           </Container>

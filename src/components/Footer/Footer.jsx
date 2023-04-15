@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './Footer.module.css';
 import {
   AppBar,
   Toolbar,
@@ -16,8 +17,9 @@ const Footer = () => {
         <Container
           sx={{ display: { md: 'flex', justifyContent: 'space-between' } }}
         >
-          <Box py={2}>
+          <Box>
             <Typography
+              className={s.text}
               variant="h6"
               noWrap
               component="div"
