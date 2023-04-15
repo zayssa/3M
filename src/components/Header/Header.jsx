@@ -1,39 +1,38 @@
-import React, { useCallback, useContext } from 'react';
-import { useState } from 'react';
+import React, { useCallback, useContext } from "react";
+import s from "./Header.module.css";
+import { useState } from "react";
 import {
   AppBar,
   Toolbar,
   IconButton,
   Typography,
   Box,
-  Badge,
-  Link,
+  Link as LinkMui,
   Drawer,
-  MenuItem,
   Menu as MenuMui,
   Container,
   Grid,
   Input,
-} from '@mui/material';
+} from "@mui/material";
 import {
-  Notifications,
   Favorite,
   Search as SearchIcon,
   Menu as MenuIcon,
-} from '@mui/icons-material';
-import User from '../User/User';
-import { PostContext } from '../../context/PostContext';
-import { UserContext } from '../../context/UserContext';
-import { Routes, Route } from "react-router";
+} from "@mui/icons-material";
+import User from "../User/User";
+import { PostContext } from "../../context/PostContext";
+import { UserContext } from "../../context/UserContext";
+import { Routes, Route, Link } from "react-router-dom";
 
 const Header = () => {
   const { handlePostsSearch } = useContext(PostContext);
   const { currentUser } = useContext(UserContext);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const handleClose = () => setAnchorEl(null);
   const openMenu = (event) => setAnchorEl(event.currentTarget);
+  const { favourites } = useContext(PostContext);
 
   const handleSearchChange = useCallback((evt) => {
     setSearchValue(evt.target.value);
@@ -52,180 +51,186 @@ const Header = () => {
     [handleSearch]
   );
 
+
   return (
-    <AppBar
-      position="sticky"
-      sx={{ height: 100, bgcolor: "lightblue", color: "black", paddingTop: 1 }}
-    >
-      <Toolbar>
-        <Container>
-          <Grid
-            container
-            sx={{
-              display: {
-                md: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              },
-            }}
-          >
+    <header>
+      <AppBar
+        position="sticky"
+        sx={{
+          height: 100,
+          bgcolor: "lightblue",
+          color: "black",
+          paddingTop: 1,
+        }}
+      >
+        <Toolbar>
+          <Container>
             <Grid
-              item
-              lg={4}
-              md={4}
-              sx={{ display: { md: "flex", alignItems: "center" } }}
+              container
+              sx={{
+                display: {
+                  md: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                },
+              }}
             >
-              <Drawer
-                anchor="left"
-                open={isDrawerOpen}
-                onClose={() => setIsDrawerOpen(false)}
+              <Grid
+                item
+                lg={4}
+                md={4}
+                sx={{ display: { md: "flex", alignItems: "center" } }}
               >
-                <Box
-                  p={2}
-                  width="300px"
-                  textAlign="center"
-                  role="presentation"
-                  sx={{ display: "flex", flexDirection: "column" }}
+                <Drawer
+                  anchor="left"
+                  open={isDrawerOpen}
+                  onClose={() => setIsDrawerOpen(false)}
                 >
-                  <Link
+                  <Box
+                    p={2}
+                    width="300px"
+                    textAlign="center"
+                    role="presentation"
+                    sx={{ display: "flex", flexDirection: "column" }}
+                  >
+                    <Link
+                      href="../public/index.html"
+                      variant="h6"
+                      underline="none"
+                      color="text.primary"
+                    >
+                      Главная
+                    </Link>
+                    <Link
+                      href="#"
+                      variant="h6"
+                      underline="none"
+                      color="text.secondary"
+                      to={{pathname: '/about'}}
+                    >
+                      О нас
+                    </Link>
+                    <Link
+                      href="#"
+                      variant="h6"
+                      underline="none"
+                      color="text.secondary"
+                    >
+                      Темы
+                    </Link>
+                    <Link
+                      href="#"
+                      variant="h6"
+                      underline="none"
+                      color="text.secondary"
+                    >
+                      Аккаунт
+                    </Link>
+                  </Box>
+                </Drawer>
+
+                <IconButton
+                  size="large"
+                  edge="start"
+                  color="inherit"
+                  aria-label="open drawer"
+                  sx={{ mr: 3 }}
+                  onClick={() => setIsDrawerOpen(true)}
+                >
+                  <MenuIcon />
+                </IconButton>
+
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{
+                    display: {
+                      xs: "none",
+                      sm: "block",
+                      fontFamily: "Pangolin",
+                    },
+                  }}
+                  textAlign="center"
+                >
+                  <LinkMui
                     href="../public/index.html"
-                    variant="h6"
+                    sx={{ display: { sm: "block" }, fontFamily: "Pangolin" }}
+                    variant="h3"
                     underline="none"
                     color="text.primary"
                   >
-                    Главная
-                  </Link>
-                  <Link
-                    href="#"
-                    variant="h6"
+                    REACT
+                  </LinkMui>
+                  <LinkMui
+                    href="../public/index.html"
                     underline="none"
-                    color="text.secondary"
+                    color="gray"
                   >
-                    Авторы
-                  </Link>
-                  <Link
-                    href="#"
-                    variant="h6"
-                    underline="none"
-                    color="text.secondary"
-                  >
-                    Темы
-                  </Link>
-                  <Link
-                    href="#"
-                    variant="h6"
-                    underline="none"
-                    color="text.secondary"
-                  >
-                    Аккаунт
-                  </Link>
-                </Box>
-              </Drawer>
+                    реактивные посты
+                  </LinkMui>
+                </Typography>
+              </Grid>
 
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="open drawer"
-                sx={{ mr: 3 }}
-                onClick={() => setIsDrawerOpen(true)}
+              <Grid
+                item
+                lg={4}
+                md={4}
+                sx={{ display: { md: "flex", alignItems: "center" } }}
               >
-                <MenuIcon />
-              </IconButton>
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <Input
+                        endAdornment={
+                          <IconButton onClick={handleSearch}>
+                            <SearchIcon />
+                          </IconButton>
+                        }
+                        placeholder="Search…"
+                        aria-label="search"
+                        onKeyDown={handleSearchKeyDown}
+                        value={searchValue}
+                        onChange={handleSearchChange}
+                      ></Input>
+                    }
+                  />
+                </Routes>
+              </Grid>
+              <Box sx={{ flexGrow: 1 }} />
 
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
+              <Grid
+                item
+                lg={4}
+                md={4}
                 sx={{
-                  display: { xs: "none", sm: "block", fontFamily: "Pangolin" },
+                  display: { xs: "none", md: "flex", alignItems: "center" },
                 }}
-                textAlign="center"
               >
                 <Link
-                  href="../public/index.html"
-                  sx={{ display: { sm: "block" }, fontFamily: "Pangolin" }}
-                  variant="h3"
-                  underline="none"
-                  color="text.primary"
+                  className={s.favouritesLink}
+                  to={{ pathname: "/favourites" }}
                 >
-                  REACT
+
+                  <Favorite />
+                  {favourites?.length !== 0 && (
+                    <span className={s.iconBubble}>{favourites?.length}</span>
+                  )}
+                  <IconButton
+                    size="large"
+                    aria-label="favorite"
+                    color="inherit"
+                  ></IconButton>
                 </Link>
-                <Link href="../public/index.html" underline="none" color="gray">
-                  реактивные посты
-                </Link>
-              </Typography>
+
+                <User currentUser={currentUser} {...currentUser} />
+              </Grid>
             </Grid>
-
-            <Grid
-              item
-              lg={4}
-              md={4}
-              sx={{ display: { md: "flex", alignItems: "center" } }}
-            >
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <Input
-                      endAdornment={
-                        <IconButton onClick={handleSearch}>
-                          <SearchIcon />
-                        </IconButton>
-                      }
-                      placeholder="Search…"
-                      aria-label="search"
-                      onKeyDown={handleSearchKeyDown}
-                      value={searchValue}
-                      onChange={handleSearchChange}
-                    ></Input>
-                  }
-                />
-              </Routes>
-            </Grid>
-            <Box sx={{ flexGrow: 1 }} />
-
-            <Grid
-              item
-              lg={4}
-              md={4}
-              sx={{ display: { xs: "none", md: "flex", alignItems: "center" } }}
-            >
-              <IconButton size="large" aria-label="favorite" color="inherit">
-                <Favorite />
-              </IconButton>
-
-              <IconButton
-                size="large"
-                aria-label="show 3 new notifications"
-                color="inherit"
-                onClick={openMenu}
-              >
-                <Badge badgeContent={3} color="warning">
-                  <Notifications />
-                </Badge>
-              </IconButton>
-
-              <MenuMui
-                id="basic-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                transformOrigin={{ vertical: "top", horizontal: "right" }}
-              >
-                <MenuItem onClick={handleClose}>Оповещение №1</MenuItem>
-                <MenuItem onClick={handleClose}>Оповещение №2</MenuItem>
-                <MenuItem onClick={handleClose}>Оповещение №3</MenuItem>
-              </MenuMui>
-
-              <User currentUser={currentUser} {...currentUser} />
-            </Grid>
-          </Grid>
-        </Container>
-      </Toolbar>
-    </AppBar>
+          </Container>
+        </Toolbar>
+      </AppBar>
+    </header>
   );
 };
 

@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import PostList from "../../components/PostList/PostList";
+import { PostContext } from "../../context/PostContext";
 
-const PostsPage = ({ posts, handlePostLike, currentUser }) => {
+const PostsPage = ({ handlePostLike, currentUser }) => {
+  const { posts } = useContext(PostContext);
+
   return (
     <>
       <PostList
-        postsData={posts}
+        posts={posts}
         onPostLike={handlePostLike}
         currentUser={currentUser}
       />
