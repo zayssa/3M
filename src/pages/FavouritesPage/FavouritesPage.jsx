@@ -1,19 +1,14 @@
-import React, { useContext } from "react";
-import s from "./FavouritesPage.module.css";
-import { PostContext } from "../../context/PostContext";
-import { Sort } from "@mui/icons-material";
-import PostList from "../../components/PostList/PostList";
-import ContentHeader from "../../components/ContentHeader/ContentHeader";
+import React, { useContext } from 'react';
+import { PostContext } from '../../context/PostContext';
+import PostList from '../../components/PostList/PostList';
+import ContentHeader from '../../components/ContentHeader/ContentHeader';
 
 const FavouritesPage = () => {
+  const { favourites } = useContext(PostContext);
 
-    const { favourites } = useContext(PostContext);
-
-  
   return (
     <>
-    <ContentHeader title='Избранное' />
-      <Sort />
+      <ContentHeader title="Избранное" />
       <div>
         <PostList posts={favourites} />
       </div>

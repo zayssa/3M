@@ -3,14 +3,11 @@ import { Box, Grid, Pagination } from '@mui/material';
 import Button from '../Button/Button';
 import Post from '../Post/Post';
 import { POSTS_PER_PAGE } from '../shared/constants';
-import { useContext } from 'react';
-import { PostContext } from '../../context/PostContext';
 import NotFound from '../NotFound/NotFound';
 import { useNavigate } from 'react-router';
 
-const PostList = () => {
+const PostList = ({ posts }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { posts } = useContext(PostContext);
   const pagesCount = useMemo(() => {
     return Math.ceil(posts?.length / POSTS_PER_PAGE);
   }, [posts]);
