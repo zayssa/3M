@@ -27,10 +27,7 @@ const Header = () => {
   const { handlePostsSearch } = useContext(PostContext);
   const { currentUser } = useContext(UserContext);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [searchValue, setSearchValue] = useState('');
-  const handleClose = () => setAnchorEl(null);
-  const openMenu = (event) => setAnchorEl(event.currentTarget);
   const { favourites } = useContext(PostContext);
 
   const handleSearchChange = useCallback((evt) => {
