@@ -9,7 +9,6 @@ import {
   Box,
   Link as LinkMui,
   Drawer,
-  Menu as MenuMui,
   Container,
   Grid,
   Input,
@@ -179,7 +178,7 @@ const Header = () => {
               >
                 <Routes>
                   <Route
-                    path="/"
+                    path="/posts"
                     element={
                       <Input
                         endAdornment={
