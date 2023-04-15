@@ -7,10 +7,10 @@ import { useContext } from 'react';
 import { PostContext } from '../../context/PostContext';
 import NotFound from '../NotFound/NotFound';
 import { useNavigate } from 'react-router';
-import { Routes, Route } from 'react-router-dom'
 
-const PostList = ({ posts }) => {
+const PostList = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const { posts } = useContext(PostContext);
   const pagesCount = useMemo(() => {
     return Math.ceil(posts?.length / POSTS_PER_PAGE);
   }, [posts]);
@@ -24,28 +24,31 @@ const PostList = ({ posts }) => {
   const navigate = useNavigate();
 
   return (
-    <Box py={5}>
-      {!posts.length && (
+    <Box pb={5}>
+      {!posts.length ? (
         <NotFound
           title="Простите, по вашему запросу постов не найдено."
           buttonText="Назад"
           buttonAction={() => navigate(0)}
         />
-      )}
-      <Grid container spacing={5}>
-        {postsCurrent?.map((item) => (
-          <Post key={item._id} post={item} />
-        ))}
-      </Grid>
+      ) : (
+        <>
+          <Button />
 
-      {posts?.length && (
-        <Box pt={5} display="flex" justifyContent="center">
-          <Pagination
-            count={pagesCount}
-            page={currentPage}
-            onChange={handlePageChange}
-          />
-        </Box>
+          <Grid container spacing={5}>
+            {postsCurrent?.map((item) => (
+              <Post key={item._id} post={item} />
+            ))}
+          </Grid>
+
+          <Box pt={5} display="flex" justifyContent="center">
+            <Pagination
+              count={pagesCount}
+              page={currentPage}
+              onChange={handlePageChange}
+            />
+          </Box>
+        </>
       )}
     </Box>
   );

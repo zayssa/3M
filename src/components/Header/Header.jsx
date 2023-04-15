@@ -1,6 +1,6 @@
-import React, { useCallback, useContext } from "react";
-import s from "./Header.module.css";
-import { useState } from "react";
+import React, { useCallback, useContext } from 'react';
+import s from './Header.module.css';
+import { useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -13,23 +13,23 @@ import {
   Container,
   Grid,
   Input,
-} from "@mui/material";
+} from '@mui/material';
 import {
   Favorite,
   Search as SearchIcon,
   Menu as MenuIcon,
-} from "@mui/icons-material";
-import User from "../User/User";
-import { PostContext } from "../../context/PostContext";
-import { UserContext } from "../../context/UserContext";
-import { Routes, Route, Link } from "react-router-dom";
+} from '@mui/icons-material';
+import User from '../User/User';
+import { PostContext } from '../../context/PostContext';
+import { UserContext } from '../../context/UserContext';
+import { Routes, Route, Link } from 'react-router-dom';
 
 const Header = () => {
   const { handlePostsSearch } = useContext(PostContext);
   const { currentUser } = useContext(UserContext);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const handleClose = () => setAnchorEl(null);
   const openMenu = (event) => setAnchorEl(event.currentTarget);
   const { favourites } = useContext(PostContext);
@@ -51,15 +51,14 @@ const Header = () => {
     [handleSearch]
   );
 
-
   return (
     <header>
       <AppBar
         position="sticky"
         sx={{
           height: 100,
-          bgcolor: "lightblue",
-          color: "black",
+          bgcolor: 'lightblue',
+          color: 'black',
           paddingTop: 1,
         }}
       >
@@ -69,9 +68,9 @@ const Header = () => {
               container
               sx={{
                 display: {
-                  md: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  md: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
                 },
               }}
             >
@@ -79,7 +78,7 @@ const Header = () => {
                 item
                 lg={4}
                 md={4}
-                sx={{ display: { md: "flex", alignItems: "center" } }}
+                sx={{ display: { md: 'flex', alignItems: 'center' } }}
               >
                 <Drawer
                   anchor="left"
@@ -91,7 +90,7 @@ const Header = () => {
                     width="300px"
                     textAlign="center"
                     role="presentation"
-                    sx={{ display: "flex", flexDirection: "column" }}
+                    sx={{ display: 'flex', flexDirection: 'column' }}
                   >
                     <Link
                       href="../public/index.html"
@@ -106,7 +105,7 @@ const Header = () => {
                       variant="h6"
                       underline="none"
                       color="text.secondary"
-                      to={{pathname: '/about'}}
+                      to={{ pathname: '/about' }}
                     >
                       О нас
                     </Link>
@@ -146,16 +145,16 @@ const Header = () => {
                   component="div"
                   sx={{
                     display: {
-                      xs: "none",
-                      sm: "block",
-                      fontFamily: "Pangolin",
+                      xs: 'none',
+                      sm: 'block',
+                      fontFamily: 'Pangolin',
                     },
                   }}
                   textAlign="center"
                 >
                   <LinkMui
                     href="../public/index.html"
-                    sx={{ display: { sm: "block" }, fontFamily: "Pangolin" }}
+                    sx={{ display: { sm: 'block' }, fontFamily: 'Pangolin' }}
                     variant="h3"
                     underline="none"
                     color="text.primary"
@@ -176,7 +175,7 @@ const Header = () => {
                 item
                 lg={4}
                 md={4}
-                sx={{ display: { md: "flex", alignItems: "center" } }}
+                sx={{ display: { md: 'flex', alignItems: 'center' } }}
               >
                 <Routes>
                   <Route
@@ -205,14 +204,13 @@ const Header = () => {
                 lg={4}
                 md={4}
                 sx={{
-                  display: { xs: "none", md: "flex", alignItems: "center" },
+                  display: { xs: 'none', md: 'flex', alignItems: 'center' },
                 }}
               >
                 <Link
                   className={s.favouritesLink}
-                  to={{ pathname: "/favourites" }}
+                  to={{ pathname: '/favourites' }}
                 >
-
                   <Favorite />
                   {favourites?.length !== 0 && (
                     <span className={s.iconBubble}>{favourites?.length}</span>
