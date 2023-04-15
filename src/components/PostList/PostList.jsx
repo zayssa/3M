@@ -24,7 +24,7 @@ const PostList = () => {
   const navigate = useNavigate();
 
   return (
-    <Box py={5}>
+    <Box pb={5}>
       {!posts.length ? (
         <NotFound
           title="Простите, по вашему запросу постов не найдено."
@@ -32,22 +32,23 @@ const PostList = () => {
           buttonAction={() => navigate(0)}
         />
       ) : (
-        <Button />
-      )}
-      <Grid container spacing={5}>
-        {postsCurrent?.map((item) => (
-          <Post key={item._id} post={item} />
-        ))}
-      </Grid>
+        <>
+          <Button />
 
-      {posts?.length && (
-        <Box pt={5} display="flex" justifyContent="center">
-          <Pagination
-            count={pagesCount}
-            page={currentPage}
-            onChange={handlePageChange}
-          />
-        </Box>
+          <Grid container spacing={5}>
+            {postsCurrent?.map((item) => (
+              <Post key={item._id} post={item} />
+            ))}
+          </Grid>
+
+          <Box pt={5} display="flex" justifyContent="center">
+            <Pagination
+              count={pagesCount}
+              page={currentPage}
+              onChange={handlePageChange}
+            />
+          </Box>
+        </>
       )}
     </Box>
   );
