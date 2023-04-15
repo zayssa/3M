@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './Footer.module.css';
 import { AppBar, Toolbar, Typography, Box, Link, Container  } from '@mui/material';
 import { Facebook, Instagram, Telegram, Twitter } from '@mui/icons-material';
 
@@ -8,7 +9,7 @@ const Footer = () => {
             <Toolbar>
                 <Container sx={{ display: { md: 'flex', justifyContent: 'space-between'} }}>
                     <Box>
-                        <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>
+                        <Typography className={s.text} variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>
                             Реактивные посты
                         </Typography>
                         <Box sx={{ display: { xs: 'none', md: 'flex', justifyContent: 'space-evenly'} }}>
