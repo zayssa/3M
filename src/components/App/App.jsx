@@ -16,6 +16,7 @@ import Breadcrumbs from '../Breadcrumbs/Breadcrumbs.jsx';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import FavouritesPage from '../../pages/FavouritesPage/FavouritesPage';
 import AboutPage from '../../pages/AboutPage/AboutPage';
+import UserPage from '../../pages/UserPage/UserPage.jsx'
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -80,10 +81,10 @@ const App = () => {
     <Box
       sx={{
         display: {
-          md: 'flex',
+          md: "flex",
         },
-        flexDirection: 'column',
-        minHeight: '100vh',
+        flexDirection: "column",
+        minHeight: "100vh",
       }}
     >
       <UserContext.Provider value={{ currentUser }}>
@@ -96,7 +97,7 @@ const App = () => {
             handlePostsSearch,
           }}
         >
-          <Header />
+          <Header currentUser={currentUser} {...currentUser} />
 
           <Container
             sx={{
@@ -129,6 +130,7 @@ const App = () => {
                 <Route path="/favourites" element={<FavouritesPage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="*" element={<NotFoundPage />} />
+                <Route path="/user" element={<UserPage />} />
               </Route>
             </Routes>
           </Container>

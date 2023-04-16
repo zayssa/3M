@@ -1,0 +1,8 @@
+.info {
+    border: 1px solid lightgray;
+    border-radius: 15px;
+}
+
+.infoTitle {
+    border-bottom: 1px solid lightgray;
+}

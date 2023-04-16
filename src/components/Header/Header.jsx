@@ -12,6 +12,7 @@ import {
   Container,
   Grid,
   Input,
+  Avatar,
 } from '@mui/material';
 import {
   Favorite,
@@ -23,11 +24,11 @@ import { PostContext } from '../../context/PostContext';
 import { UserContext } from '../../context/UserContext';
 import { Routes, Route, Link } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({ avatar }) => {
   const { handlePostsSearch } = useContext(PostContext);
   const { currentUser } = useContext(UserContext);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const { favourites } = useContext(PostContext);
 
   const handleSearchChange = useCallback((evt) => {
@@ -53,8 +54,8 @@ const Header = () => {
         position="sticky"
         sx={{
           height: 100,
-          bgcolor: 'lightblue',
-          color: 'black',
+          bgcolor: "lightblue",
+          color: "black",
           paddingTop: 1,
         }}
       >
@@ -64,9 +65,9 @@ const Header = () => {
               container
               sx={{
                 display: {
-                  md: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
+                  md: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 },
               }}
             >
@@ -74,7 +75,7 @@ const Header = () => {
                 item
                 lg={4}
                 md={4}
-                sx={{ display: { md: 'flex', alignItems: 'center' } }}
+                sx={{ display: { md: "flex", alignItems: "center" } }}
               >
                 <Drawer
                   anchor="left"
@@ -86,7 +87,7 @@ const Header = () => {
                     width="300px"
                     textAlign="center"
                     role="presentation"
-                    sx={{ display: 'flex', flexDirection: 'column' }}
+                    sx={{ display: "flex", flexDirection: "column" }}
                   >
                     <Link
                       href="../public/index.html"
@@ -101,7 +102,7 @@ const Header = () => {
                       variant="h6"
                       underline="none"
                       color="text.secondary"
-                      to={{ pathname: '/about' }}
+                      to={{ pathname: "/about" }}
                     >
                       О нас
                     </Link>
@@ -141,16 +142,16 @@ const Header = () => {
                   component="div"
                   sx={{
                     display: {
-                      xs: 'none',
-                      sm: 'block',
-                      fontFamily: 'Pangolin',
+                      xs: "none",
+                      sm: "block",
+                      fontFamily: "Pangolin",
                     },
                   }}
                   textAlign="center"
                 >
                   <LinkMui
                     href="../public/index.html"
-                    sx={{ display: { sm: 'block' }, fontFamily: 'Pangolin' }}
+                    sx={{ display: { sm: "block" }, fontFamily: "Pangolin" }}
                     variant="h3"
                     underline="none"
                     color="text.primary"
@@ -171,7 +172,7 @@ const Header = () => {
                 item
                 lg={4}
                 md={4}
-                sx={{ display: { md: 'flex', alignItems: 'center' } }}
+                sx={{ display: { md: "flex", alignItems: "center" } }}
               >
                 <Routes>
                   <Route
@@ -200,12 +201,12 @@ const Header = () => {
                 lg={4}
                 md={4}
                 sx={{
-                  display: { xs: 'none', md: 'flex', alignItems: 'center' },
+                  display: { xs: "none", md: "flex", alignItems: "center" },
                 }}
               >
                 <Link
                   className={s.favouritesLink}
-                  to={{ pathname: '/favourites' }}
+                  to={{ pathname: "/favourites" }}
                 >
                   <Favorite />
                   {favourites?.length !== 0 && (
@@ -218,7 +219,13 @@ const Header = () => {
                   ></IconButton>
                 </Link>
 
-                <User currentUser={currentUser} {...currentUser} />
+                <Link to={{ pathname: "/user" }}>
+                  <Avatar
+                    aria-label="recipe"
+                    src={avatar}
+                    sx={{ marginLeft: 2 }}
+                  ></Avatar>
+                </Link>
               </Grid>
             </Grid>
           </Container>
