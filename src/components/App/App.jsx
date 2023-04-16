@@ -21,27 +21,27 @@ const App = () => {
   const [posts, setPosts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const [favourites, setFavourites] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const getPostsList = useCallback(() => {
-    api.getPostList().then((postData) => {
-      setPosts(postData);
-    });
-  }, []);
 
-  useEffect(() => {
-    getPostsList();
-
-    api.getUserInfo().then((userData) => {
-      setCurrentUser(userData);
-    });
-  }, [getPostsList]);
-
-  useEffect(() => {
-    const favouritesProducts = posts?.filter((item) =>
-      isLiked(item.likes, currentUser._id)
-    );
-    setFavourites(favouritesProducts);
-  }, [currentUser, posts]);
+   useEffect(() => {
+     setIsLoading(true);
+     Promise.all([api.getUserInfo(), api.getPostList()])
+       .then(([userData, postData]) => {
+         console.log("postData", postData);
+         setCurrentUser(userData);
+         setPosts(postData);
+         const favouritesProducts = postData?.filter((item) =>
+           isLiked(item.likes, userData._id)
+         );
+         setFavourites(favouritesProducts);
+         console.log("favouritesProducts", favouritesProducts);
+       })
+       .catch((err) => console.error(err))
+       .finally(() => {
+         setIsLoading(false);
+       });
+   }, []);
 
   const handlePostsSearch = useCallback((searchValue) => {
     api.search(searchValue).then((postData) => {
@@ -86,12 +86,12 @@ const App = () => {
         minHeight: '100vh',
       }}
     >
-      <UserContext.Provider value={{ currentUser }}>
+      <UserContext.Provider value={{ currentUser, isLoading }}>
         <PostContext.Provider
           value={{
             posts,
             favourites,
-            getPostsList,
+            isLoading,
             handlePostLike,
             handlePostsSearch,
           }}

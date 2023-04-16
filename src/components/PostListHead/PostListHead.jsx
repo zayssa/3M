@@ -3,7 +3,7 @@ import { Button as ButtonMui, Box, Typography, Modal } from '@mui/material';
 
 import CreatePostForm from '../Forms/CreatePostForm/CreatePostForm';
 
-const Button = () => {
+const PostListHead = () => {
   const postEditForm = useRef();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -17,13 +17,13 @@ const Button = () => {
       sx={{
         height: 150,
         marginTop: 5,
-        position: 'relative',
+        position: "relative",
         marginBottom: 10,
       }}
     >
       <Typography
         sx={{
-          fontFamily: 'Pangolin',
+          fontFamily: "Pangolin",
         }}
         textAlign="center"
         variant="h3"
@@ -31,7 +31,7 @@ const Button = () => {
         Реактивные посты
       </Typography>
       <ButtonMui
-        sx={{ position: 'absolute', bottom: 10, right: 10 }}
+        sx={{ position: "absolute", bottom: 10, right: 10 }}
         variant="contained"
         color="inherit"
         onClick={handleOpen}
@@ -53,4 +53,4 @@ const Button = () => {
   );
 };
 
-export default Button;
+export default PostListHead;
