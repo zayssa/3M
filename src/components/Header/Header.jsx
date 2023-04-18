@@ -24,7 +24,7 @@ import { PostContext } from '../../context/PostContext';
 import { UserContext } from '../../context/UserContext';
 import { Routes, Route, Link } from 'react-router-dom';
 
-const Header = ({ avatar }) => {
+const Header = () => {
   const { handlePostsSearch } = useContext(PostContext);
   const { currentUser } = useContext(UserContext);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -222,7 +222,7 @@ const Header = ({ avatar }) => {
                 <Link to={{ pathname: "/user" }}>
                   <Avatar
                     aria-label="recipe"
-                    src={avatar}
+                    src={currentUser.avatar}
                     sx={{ marginLeft: 2 }}
                   ></Avatar>
                 </Link>

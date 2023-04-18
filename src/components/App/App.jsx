@@ -97,7 +97,7 @@ const App = () => {
             handlePostsSearch,
           }}
         >
-          <Header currentUser={currentUser} {...currentUser} />
+          <Header />
 
           <Container
             sx={{
