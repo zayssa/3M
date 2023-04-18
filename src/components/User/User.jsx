@@ -1,59 +1,113 @@
-import React from "react";
-import { Typography, Box, Avatar, Button, Modal } from "@mui/material";
-import UserForm from "../Forms/UserForm/UserForm";
+import React, { useCallback, useContext, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  Typography,
+  Box,
+  Avatar,
+  IconButton,
+  Badge,
+  Button,
+  Dialog,
+} from '@mui/material';
+import {
+  Favorite as FavoriteIcon,
+  Logout as LogoutIcon,
+} from '@mui/icons-material';
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 600,
-  height: 600,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { UserContext } from '../../context/UserContext';
+import { PostContext } from '../../context/PostContext';
+import { USER_DIALOG_KINDS } from '../../utils/constants';
+import LoginForm from '../Forms/LoginForm/LoginForm';
+import RegistrationForm from '../Forms/RegistrationForm/RegistrationForm';
+import ResetPasswordForm from '../Forms/ResetPasswordForm/ResetPasswordForm';
+import api from '../../utils/api';
+import { SnackbarContext } from '../../context/SnackbarContext';
 
-const User = ({ avatar, name, about }) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  return (
-    <Box
-      sx={{
-        display: {
-          md: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          textAlign: "center",
-          marginLeft: 20,
+const User = () => {
+  const { currentUser } = useContext(UserContext);
+  const { favourites } = useContext(PostContext);
+  const { setMessage } = useContext(SnackbarContext);
+
+  const [dialogKind, setDialogKind] = useState(null);
+
+  const isOpen = useMemo(() => {
+    return Boolean(dialogKind);
+  }, [dialogKind]);
+
+  const onDialogOpen = useCallback(() => {
+    setDialogKind(USER_DIALOG_KINDS.authorization);
+  }, []);
+  const onDialogClose = useCallback(() => {
+    setDialogKind(null);
+  }, []);
+
+  const onLogOut = useCallback(() => {
+    api.logoutUser().then(() => {
+      setMessage({
+        severity: 'success',
+        text: 'Успешно',
+        onClose: () => {
+          window.location = '/';
         },
-      }}
+      });
+    });
+  }, [setMessage]);
+
+  return !currentUser ? (
+    <>
+      <Button variant="contained" color="primary" onClick={onDialogOpen}>
+        Войти
+      </Button>
+
+      <Dialog open={isOpen} maxWidth="xs">
+        {dialogKind === USER_DIALOG_KINDS.authorization ? (
+          <LoginForm
+            onDialogKindChange={setDialogKind}
+            onClose={onDialogClose}
+          />
+        ) : dialogKind === USER_DIALOG_KINDS.registration ? (
+          <RegistrationForm
+            onDialogKindChange={setDialogKind}
+            onClose={onDialogClose}
+          />
+        ) : dialogKind === USER_DIALOG_KINDS.recovery ? (
+          <ResetPasswordForm
+            onDialogKindChange={setDialogKind}
+            onClose={onDialogClose}
+          />
+        ) : (
+          'Whoopsy!'
+        )}
+      </Dialog>
+    </>
+  ) : (
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      textAlign="center"
+      gap={1}
     >
-      <Box>
-        <Typography sx={{ fontWeight: 700 }}>{name}</Typography>
-        <Typography color="gray">{about}</Typography>
+      <IconButton component={Link} to={{ pathname: '/favourites' }}>
+        <Badge badgeContent={favourites?.length} color="primary">
+          <FavoriteIcon />
+        </Badge>
+      </IconButton>
+
+      <Box pl={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
+        <Typography sx={{ fontWeight: 700 }} lineHeight={1}>
+          {currentUser.name}
+        </Typography>
+        <Typography variant="caption">{currentUser.about}</Typography>
       </Box>
-      <div>
-        <Button onClick={handleOpen}>
-          <Avatar
-            aria-label="recipe"
-            src={avatar}
-            sx={{ marginLeft: 2 }}
-          ></Avatar>
-        </Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <UserForm />
-          </Box>
-        </Modal>
-      </div>
+
+      <IconButton>
+        <Avatar src={currentUser.avatar} alt={currentUser.name}></Avatar>
+      </IconButton>
+
+      <IconButton size="large" edge="end" color="inherit" onClick={onLogOut}>
+        <LogoutIcon />
+      </IconButton>
     </Box>
   );
 };
