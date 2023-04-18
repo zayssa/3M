@@ -121,7 +121,7 @@ class Api {
 }
 
 const config = {
-  baseUrl: 'https://api.react-learning.ru/v2/group-10',
+  baseUrl: 'https://api.react-learning.ru/v2/fron10',
   headers: {
     'Content-Type': 'application/json',
   },
