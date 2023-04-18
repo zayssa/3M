@@ -1,18 +1,21 @@
 import React from "react";
 import s from "./UserHeader.module.css";
+import { Button, Typography, Box } from "@mui/material";
 
 const UserHeader = ({ name, about, avatar, email, group }) => {
   return (
     <>
       <section className={s.userBox}>
-        <div className={s.user}>
+        <Box className={s.user}>
           <img className={s.avatar} src={avatar} alt="Фото профиля" />
-          <div className={s.userInfo}>
-            <p className={s.name}>{name}</p>
-            <p className={s.about}>{about}</p>
-          </div>
-        </div>
-        <button className={s.edit}>Редактировать</button>
+          <Box className={s.userInfo}>
+            <Typography className={s.name}>{name}</Typography>
+            <Typography className={s.about}>{about}</Typography>
+          </Box>
+        </Box>
+        <Button className={s.edit} variant="contained" color="success" size="large">
+          Редактировать
+        </Button>
       </section>
     </>
   );

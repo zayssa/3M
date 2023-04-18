@@ -1,19 +1,22 @@
 import React from "react";
 import s from "./UserInfo.module.css";
+import { Typography, Box } from "@mui/material";
 
 const UserInfo = ({ name, about, group, email }) => {
   return (
     <section className={s.userInfo}>
-      <h1 className={s.title}>Мой профиль</h1>
-      <div className={s.info}>
-        <div className={s.infoTitle}>
-          <h3>Информация</h3>
-        </div>
-        <p className={s.name}>{name}</p>
-        <p className={s.about}>{about}</p>
-        <p className={s.group}>Группа: {group}</p>
-        <p className={s.contacts}>Контакты: {email}</p>
-      </div>
+      <Typography variant="h3"  className={s.title}>
+        Мой профиль
+      </Typography>
+      <Box className={s.info}>
+        <Box className={s.infoTitle}>
+          <Typography variant="h5">Информация</Typography>
+        </Box>
+        <Typography className={s.name}>{name}</Typography>
+        <Typography className={s.about}>{about}</Typography>
+        <Typography className={s.group}>Группа: {group}</Typography>
+        <Typography className={s.contacts}>Контакты: {email}</Typography>
+      </Box>
     </section>
   );
 };

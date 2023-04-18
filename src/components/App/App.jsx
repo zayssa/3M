@@ -16,7 +16,7 @@ import Breadcrumbs from '../Breadcrumbs/Breadcrumbs.jsx';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import FavouritesPage from '../../pages/FavouritesPage/FavouritesPage';
 import AboutPage from '../../pages/AboutPage/AboutPage';
-import UserPage from '../../pages/UserPage/UserPage.jsx'
+import UserPage from '../../pages/UserPage/UserPage.jsx';
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -81,10 +81,10 @@ const App = () => {
     <Box
       sx={{
         display: {
-          md: "flex",
+          md: 'flex',
         },
-        flexDirection: "column",
-        minHeight: "100vh",
+        flexDirection: 'column',
+        minHeight: '100vh',
       }}
     >
       <UserContext.Provider value={{ currentUser }}>
