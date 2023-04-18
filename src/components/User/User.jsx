@@ -101,7 +101,7 @@ const User = () => {
         <Typography variant="caption">{currentUser.about}</Typography>
       </Box>
 
-      <IconButton>
+      <IconButton component={Link} to={'/user'}>
         <Avatar src={currentUser.avatar} alt={currentUser.name}></Avatar>
       </IconButton>
 
