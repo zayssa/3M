@@ -33,7 +33,7 @@ const PostListHead = () => {
       <ButtonMui
         sx={{ position: "absolute", bottom: 10, right: 10 }}
         variant="contained"
-        color="inherit"
+        color="primary"
         onClick={handleOpen}
       >
         Создать пост
