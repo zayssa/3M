@@ -91,9 +91,8 @@ const App = () => {
           value={{
             posts,
             favourites,
-            isLoading,
             handlePostLike,
-            handlePostsSearch,
+            handlePostsSearch
           }}
         >
           <Header />
