@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import {
   Avatar,
   Badge,
@@ -12,36 +12,35 @@ import {
   Grid,
   IconButton,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 import {
   Favorite,
   ExpandMore,
   Delete,
   Comment as CommentIcon,
-} from "@mui/icons-material";
-import { styled } from "@mui/material/styles";
-import dayjs from "dayjs";
-import "dayjs/locale/ru";
-import relativeTime from "dayjs/plugin/relativeTime";
+} from '@mui/icons-material';
+import { styled } from '@mui/material/styles';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-import { UserContext } from "../../context/UserContext";
-import { PostContext } from "../../context/PostContext";
-import s from "./Post.module.css";
-import { isLiked } from "../../utils/post";
-import api from "../../utils/api";
-import { Link } from "react-router-dom";
-import Spinner from '../Spinner/Spinner'
-import PostSkeleton from "../PostSkeleton/PostSkeleton";
+import { UserContext } from '../../context/UserContext';
+import { PostContext } from '../../context/PostContext';
+import s from './Post.module.css';
+import { isLiked } from '../../utils/post';
+import api from '../../utils/api';
+import { Link } from 'react-router-dom';
+import PostSkeleton from '../PostSkeleton/PostSkeleton';
 
-dayjs.locale("ru");
+dayjs.locale('ru');
 dayjs.extend(relativeTime);
 
 const ExpandMoreStyled = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
 }));
 
 const Post = ({ post }) => {
@@ -106,15 +105,17 @@ const Post = ({ post }) => {
                 </Typography>
 
                 {post.tags &&
-                  post.tags.map((tag, idx) => (
-                    <Chip
-                      key={idx}
-                      color="primary"
-                      label={tag}
-                      size="small"
-                      sx={{ marginRight: 1 }}
-                    />
-                  ))}
+                  post.tags
+                    .filter((tag) => tag.length > 0)
+                    .map((tag, idx) => (
+                      <Chip
+                        key={idx}
+                        color="primary"
+                        label={tag}
+                        size="small"
+                        sx={{ marginRight: 1 }}
+                      />
+                    ))}
               </CardContent>
             </Link>
 
@@ -125,7 +126,7 @@ const Post = ({ post }) => {
                   color="primary"
                   size="small"
                 >
-                  <Favorite color={isPostLiked ? "error" : "grey"} />
+                  <Favorite color={isPostLiked ? 'error' : 'grey'} />
                 </Badge>
               </IconButton>
 

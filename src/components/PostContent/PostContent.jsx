@@ -50,21 +50,23 @@ const PostContent = ({ post, onPostDataChange }) => {
           <img className={s.image} src={post.image} alt="post illustration" />
           <p>{post.text}</p>
           {post.created_at && (
-            <p>{`Создано ${dayjs(post.created_at).format("LLL")}`}</p>
+            <p>{`Создано ${dayjs(post.created_at).format('LLL')}`}</p>
           )}
           {post.author && <p>{`Автор: ${post.author.name}`}</p>}
           <Grid container spacing={2} alignItems="center">
             <Grid item xs>
               {post.tags &&
-                post.tags.map((tag, idx) => (
-                  <Chip
-                    key={idx}
-                    color="primary"
-                    label={tag}
-                    size="small"
-                    sx={{ marginRight: 1 }}
-                  />
-                ))}
+                post.tags
+                  .filter((tag) => tag.length > 0)
+                  .map((tag, idx) => (
+                    <Chip
+                      key={idx}
+                      color="primary"
+                      label={tag}
+                      size="small"
+                      sx={{ marginRight: 1 }}
+                    />
+                  ))}
             </Grid>
             <Grid item>
               <Button
@@ -77,7 +79,7 @@ const PostContent = ({ post, onPostDataChange }) => {
                   )
                 }
               >
-                {liked ? "В избранном" : "В избранное"}
+                {liked ? 'В избранном' : 'В избранное'}
               </Button>
             </Grid>
             <Grid item>

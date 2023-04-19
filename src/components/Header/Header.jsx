@@ -71,9 +71,9 @@ const Header = () => {
                 variant="h3"
                 lineHeight={1}
               >
-                REACT
+                3М
               </Typography>
-              реактивные посты
+              мысли, мечтай, меняйся...
             </LinkMui>
           </Typography>
 

@@ -17,21 +17,21 @@ const PostListHead = () => {
       sx={{
         height: 150,
         marginTop: 5,
-        position: "relative",
+        position: 'relative',
         marginBottom: 10,
       }}
     >
       <Typography
         sx={{
-          fontFamily: "Pangolin",
+          fontFamily: 'Pangolin',
         }}
         textAlign="center"
         variant="h3"
       >
-        Реактивные посты
+        Мысли, мечтай, меняйся...
       </Typography>
       <ButtonMui
-        sx={{ position: "absolute", bottom: 10, right: 10 }}
+        sx={{ position: 'absolute', bottom: 10, right: 10 }}
         variant="contained"
         color="primary"
         onClick={handleOpen}
