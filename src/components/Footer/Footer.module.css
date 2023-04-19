@@ -1,9 +1,5 @@
-.appBar {
+.footer {
     position: static;
-    background-color: #000;
-    flex-shrink: 0;
-}
-
-.text {
-    flex-wrap: nowrap;
+    background-color: #282828;
+    color: aliceblue;
 }

@@ -1,0 +1,40 @@
+.main {
+  background: linear-gradient(rgb(173, 216, 230), rgba(255, 255, 255, 0.507)), url('./img/bg-image.png') top right no-repeat;
+  background-size: contain;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+
+.quote {
+  width: 50%;
+  color: rgb(23, 121, 207);
+  position: relative !important;
+}
+
+.text {
+  font-size: 40px;
+  color: #00351c;
+  text-align: center;
+}
+
+.author {
+  color: gray;
+}
+
+.button {
+  padding: 15px 30px !important;
+  border-radius: 40px !important;
+  position: absolute !important;
+  bottom: -100px;
+  left: 20px;
+}
+
+.arrowRight {
+  width: 15px;
+  height: 15px;
+  fill: aliceblue;
+  margin-left: 5px;
+}
