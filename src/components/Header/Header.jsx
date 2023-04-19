@@ -1,6 +1,4 @@
-import React, { useCallback, useContext } from 'react';
-import s from './Header.module.css';
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -9,222 +7,84 @@ import {
   Box,
   Link as LinkMui,
   Drawer,
-  Container,
-  Grid,
-  Input,
 } from '@mui/material';
-import {
-  Favorite,
-  Search as SearchIcon,
-  Menu as MenuIcon,
-} from '@mui/icons-material';
+import { Menu as MenuIcon } from '@mui/icons-material';
+
 import User from '../User/User';
-import { PostContext } from '../../context/PostContext';
-import { UserContext } from '../../context/UserContext';
-import { Routes, Route, Link } from 'react-router-dom';
+import Search from '../Search/Search';
+import Navigation from '../Navigation/Navigation';
 
 const Header = () => {
-  const { handlePostsSearch } = useContext(PostContext);
-  const { currentUser } = useContext(UserContext);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
-  const { favourites } = useContext(PostContext);
-
-  const handleSearchChange = useCallback((evt) => {
-    setSearchValue(evt.target.value);
-  }, []);
-
-  const handleSearch = useCallback(() => {
-    handlePostsSearch(searchValue);
-  }, [searchValue, handlePostsSearch]);
-
-  const handleSearchKeyDown = useCallback(
-    (evt) => {
-      if (evt.keyCode === 13) {
-        handleSearch();
-      }
-    },
-    [handleSearch]
-  );
+  const onDrawerOpen = useCallback(() => setIsDrawerOpen(true), []);
+  const onDrawerClose = useCallback(() => setIsDrawerOpen(false), []);
 
   return (
-    <header>
-      <AppBar
-        position="sticky"
-        sx={{
-          height: 100,
-          bgcolor: 'lightblue',
-          color: 'black',
-          paddingTop: 1,
-        }}
-      >
+    <AppBar
+      sx={{
+        position: 'sticky',
+        bgcolor: 'lightblue',
+        color: 'black',
+      }}
+    >
+      <Box py={1}>
         <Toolbar>
-          <Container>
-            <Grid
-              container
+          <Drawer anchor="left" open={isDrawerOpen} onClose={onDrawerClose}>
+            <Navigation />
+          </Drawer>
+
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="Навигация"
+            onClick={onDrawerOpen}
+          >
+            <MenuIcon />
+          </IconButton>
+
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{
+              display: {
+                xs: 'none',
+                sm: 'block',
+                fontFamily: 'Pangolin',
+              },
+            }}
+            textAlign="center"
+          >
+            <LinkMui
+              href="/"
               sx={{
-                display: {
-                  md: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                },
+                display: { sm: 'block' },
+                fontFamily: 'Pangolin',
               }}
+              underline="none"
+              color="grey"
             >
-              <Grid
-                item
-                lg={4}
-                md={4}
-                sx={{ display: { md: 'flex', alignItems: 'center' } }}
+              <Typography
+                color="text.primary"
+                fontFamily="Pangolin"
+                variant="h3"
+                lineHeight={1}
               >
-                <Drawer
-                  anchor="left"
-                  open={isDrawerOpen}
-                  onClose={() => setIsDrawerOpen(false)}
-                >
-                  <Box
-                    p={2}
-                    width="300px"
-                    textAlign="center"
-                    role="presentation"
-                    sx={{ display: 'flex', flexDirection: 'column' }}
-                  >
-                    <Link
-                      href="../public/index.html"
-                      variant="h6"
-                      underline="none"
-                      color="text.primary"
-                    >
-                      Главная
-                    </Link>
-                    <Link
-                      href="#"
-                      variant="h6"
-                      underline="none"
-                      color="text.secondary"
-                      to={{ pathname: '/about' }}
-                    >
-                      О нас
-                    </Link>
-                    <Link
-                      href="#"
-                      variant="h6"
-                      underline="none"
-                      color="text.secondary"
-                    >
-                      Темы
-                    </Link>
-                    <Link
-                      href="#"
-                      variant="h6"
-                      underline="none"
-                      color="text.secondary"
-                    >
-                      Аккаунт
-                    </Link>
-                  </Box>
-                </Drawer>
+                3М
+              </Typography>
+              мысли, мечтай, меняйся...
+            </LinkMui>
+          </Typography>
 
-                <IconButton
-                  size="large"
-                  edge="start"
-                  color="inherit"
-                  aria-label="open drawer"
-                  sx={{ mr: 3 }}
-                  onClick={() => setIsDrawerOpen(true)}
-                >
-                  <MenuIcon />
-                </IconButton>
+          <Box mx="auto">
+            <Search />
+          </Box>
 
-                <Typography
-                  variant="h6"
-                  noWrap
-                  component="div"
-                  sx={{
-                    display: {
-                      xs: 'none',
-                      sm: 'block',
-                      fontFamily: 'Pangolin',
-                    },
-                  }}
-                  textAlign="center"
-                >
-                  <LinkMui
-                    href="../public/index.html"
-                    sx={{ display: { sm: 'block' }, fontFamily: 'Pangolin' }}
-                    variant="h3"
-                    underline="none"
-                    color="text.primary"
-                  >
-                    REACT
-                  </LinkMui>
-                  <LinkMui
-                    href="../public/index.html"
-                    underline="none"
-                    color="gray"
-                  >
-                    реактивные посты
-                  </LinkMui>
-                </Typography>
-              </Grid>
-
-              <Grid
-                item
-                lg={4}
-                md={4}
-                sx={{ display: { md: 'flex', alignItems: 'center' } }}
-              >
-                <Routes>
-                  <Route
-                    path="/posts"
-                    element={
-                      <Input
-                        endAdornment={
-                          <IconButton onClick={handleSearch}>
-                            <SearchIcon />
-                          </IconButton>
-                        }
-                        placeholder="Search…"
-                        aria-label="search"
-                        onKeyDown={handleSearchKeyDown}
-                        value={searchValue}
-                        onChange={handleSearchChange}
-                      ></Input>
-                    }
-                  />
-                </Routes>
-              </Grid>
-              <Box sx={{ flexGrow: 1 }} />
-
-              <Grid
-                item
-                lg={4}
-                md={4}
-                sx={{
-                  display: { xs: 'none', md: 'flex', alignItems: 'center' },
-                }}
-              >
-                <Link
-                  className={s.favouritesLink}
-                  to={{ pathname: '/favourites' }}
-                >
-                  <Favorite />
-                  {favourites?.length !== 0 && (
-                    <span className={s.iconBubble}>{favourites?.length}</span>
-                  )}
-                  <IconButton
-                    size="large"
-                    aria-label="favorite"
-                    color="inherit"
-                  ></IconButton>
-                </Link>
-
-                <User currentUser={currentUser} {...currentUser} />
-              </Grid>
-            </Grid>
-          </Container>
+          <User />
         </Toolbar>
-      </AppBar>
-    </header>
+      </Box>
+    </AppBar>
   );
 };
 

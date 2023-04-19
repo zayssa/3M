@@ -4,6 +4,7 @@ import PostContent from '../../components/PostContent/PostContent';
 import api from '../../utils/api';
 import { useEffect, useState } from 'react';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import Spinner from '../../components/Spinner/Spinner';
 
 const PostPage = () => {
   const { postId } = useParams();
@@ -31,11 +32,19 @@ const PostPage = () => {
     reloadPostData();
   }, [reloadPostData]);
 
-  return isError ? (
-    <NotFoundPage />
-  ) : (
-    <PostContent post={post} onPostDataChange={reloadPostData} />
+  return (
+    <>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        !isError && (
+          <PostContent post={post} onPostDataChange={reloadPostData} />
+        )
+      )}
+      {isError && <NotFoundPage />}
+    </>
   );
+
 };
 
 export default PostPage;

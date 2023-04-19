@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Box, Grid, Pagination } from '@mui/material';
-import Button from '../Button/Button';
 import Post from '../Post/Post';
 import { POSTS_PER_PAGE } from '../shared/constants';
 import NotFound from '../NotFound/NotFound';
@@ -30,7 +29,6 @@ const PostList = ({ posts }) => {
         />
       ) : (
         <>
-          <Button />
 
           <Grid container spacing={5}>
             {postsCurrent?.map((item) => (

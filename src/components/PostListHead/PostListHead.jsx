@@ -3,7 +3,7 @@ import { Button as ButtonMui, Box, Typography, Modal } from '@mui/material';
 
 import CreatePostForm from '../Forms/CreatePostForm/CreatePostForm';
 
-const Button = () => {
+const PostListHead = () => {
   const postEditForm = useRef();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -28,12 +28,12 @@ const Button = () => {
         textAlign="center"
         variant="h3"
       >
-        Реактивные посты
+        Мысли, мечтай, меняйся...
       </Typography>
       <ButtonMui
         sx={{ position: 'absolute', bottom: 10, right: 10 }}
         variant="contained"
-        color="inherit"
+        color="primary"
         onClick={handleOpen}
       >
         Создать пост
@@ -53,4 +53,4 @@ const Button = () => {
   );
 };
 
-export default Button;
+export default PostListHead;
