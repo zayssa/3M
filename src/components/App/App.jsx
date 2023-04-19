@@ -18,6 +18,7 @@ import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import FavouritesPage from '../../pages/FavouritesPage/FavouritesPage';
 import AboutPage from '../../pages/AboutPage/AboutPage';
 import UserPage from '../../pages/UserPage/UserPage.jsx';
+import MainPage from '../../pages/MainPage/MainPage.jsx'
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -99,10 +100,10 @@ const App = () => {
     <Box
       sx={{
         display: {
-          md: 'flex',
+          md: "flex",
         },
-        flexDirection: 'column',
-        minHeight: '100vh',
+        flexDirection: "column",
+        minHeight: "100vh",
       }}
     >
       <UserContext.Provider value={{ currentUser, isLoading }}>
@@ -118,58 +119,56 @@ const App = () => {
           <SnackbarContext.Provider value={{ message, setMessage }}>
             <Header />
 
-            <Container
-              sx={{
-                flexGrow: 1,
-              }}
-            >
-              <Routes>
-                <Route
-                  element={
-                    <>
-                      <Breadcrumbs />
-                      <Outlet />
-                    </>
-                  }
-                >
-                  <Route index element={<Navigate to="/posts" replace />} />
-                  <Route path="/posts/">
-                    <Route
-                      index
-                      element={
-                        <CatalogPage
-                          posts={posts}
-                          handlePostLike={handlePostLike}
-                          currentUser={currentUser}
-                        />
-                      }
-                    />
-                    <Route path=":postId" element={<PostPage />} />
+
+              <main className="content">
+                <Routes>
+                  <Route index element={<MainPage />} />
+                  <Route
+                    element={
+                      <>
+                        <Breadcrumbs />
+                        <Outlet />
+                      </>
+                    }
+                  >
+                    <Route index element={<Navigate to="/posts" replace />} />
+                    <Route path="/posts/">
+                      <Route
+                        index
+                        element={
+                          <CatalogPage
+                            posts={posts}
+                            handlePostLike={handlePostLike}
+                            currentUser={currentUser}
+                          />
+                        }
+                      />
+                      <Route path=":postId" element={<PostPage />} />
+                    </Route>
+                    <Route path="/favourites" element={<FavouritesPage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                    <Route path="/favourites" element={<FavouritesPage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                    <Route path="/user" element={<UserPage />} />
                   </Route>
-                  <Route path="/favourites" element={<FavouritesPage />} />
-                  <Route path="/about" element={<AboutPage />} />
-                  <Route path="*" element={<NotFoundPage />} />
-                  <Route path="/favourites" element={<FavouritesPage />} />
-                  <Route path="/about" element={<AboutPage />} />
-                  <Route path="*" element={<NotFoundPage />} />
-                  <Route path="/user" element={<UserPage />} />
-                </Route>
-              </Routes>
-            </Container>
+                </Routes>
+              </main>
 
             <Footer />
 
             <Snackbar
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
+                vertical: "top",
+                horizontal: "center",
               }}
               open={Boolean(message) && !message.hide}
               autoHideDuration={3000}
               onClose={handleSnackbarClose}
             >
-              <Alert severity={message?.severity || 'error'}>
-                {message?.text || 'Произошла ошибка'}
+              <Alert severity={message?.severity || "error"}>
+                {message?.text || "Произошла ошибка"}
               </Alert>
             </Snackbar>
           </SnackbarContext.Provider>

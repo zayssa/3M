@@ -12,7 +12,7 @@ import { Facebook, Instagram, Telegram, Twitter } from '@mui/icons-material';
 
 const Footer = () => {
   return (
-    <AppBar position="static" sx={{ bgcolor: 'text.primary', flexShrink: 0 }}>
+    <footer className={s.footer} position="static" sx={{ bgcolor: 'text.primary', flexShrink: 0 }}>
       <Toolbar>
         <Container
           sx={{ display: { md: 'flex', justifyContent: 'space-between' } }}
@@ -25,7 +25,7 @@ const Footer = () => {
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              Реактивные посты
+              REACTивный проект
             </Typography>
             <Box
               sx={{
@@ -55,7 +55,7 @@ const Footer = () => {
           </Box>
         </Container>
       </Toolbar>
-    </AppBar>
+    </footer>
   );
 };
 
