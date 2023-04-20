@@ -1,0 +1,15 @@
+
+
+.buttonBack {
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    text-decoration: none;
+    color: var(--secondary-text);
+}
+
+.buttonBack:hover {
+    opacity: .8;
+}

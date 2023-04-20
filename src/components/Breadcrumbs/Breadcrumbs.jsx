@@ -5,37 +5,32 @@ import {
   Link as MuiLink,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router';
 
-import { PostContext } from '../../context/PostContext';
+import { BreadcrumbsContext } from '../../context/BreadcrumbsContext';
+import { URLS } from '../../utils/constants';
 
 const Breadcrumbs = () => {
-  const { posts } = useContext(PostContext);
-  const { postId } = useParams();
-
-  const currentPostName = useMemo(() => {
-    const found = posts.find((item) => item._id === postId);
-    return found?.title || 'Неопознанный пост';
-  }, [posts, postId]);
+  const { breadcrumbs } = useContext(BreadcrumbsContext);
 
   return (
-    <Box py={2}>
-      <MuiBreadcrumbs>
-        <MuiLink component={Link} to="/">
-          Главная
-        </MuiLink>
-
-        {postId ? (
-          <MuiLink component={Link} to="/posts">
-            Все посты
+    !breadcrumbs.length || (
+      <Box py={2}>
+        <MuiBreadcrumbs>
+          <MuiLink component={Link} to={`/${URLS.main}`}>
+            Главная
           </MuiLink>
-        ) : (
-          <span>Все посты</span>
-        )}
-
-        {postId && <span>{currentPostName}</span>}
-      </MuiBreadcrumbs>
-    </Box>
+          {breadcrumbs.map((point, idx) =>
+            idx === breadcrumbs.length - 1 ? (
+              <span key={point.label + idx}>{point.label}</span>
+            ) : (
+              <MuiLink component={Link} to={point.url} key={point.label + idx}>
+                {point.label}
+              </MuiLink>
+            )
+          )}
+        </MuiBreadcrumbs>
+      </Box>
+    )
   );
 };
 

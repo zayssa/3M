@@ -1,21 +1,29 @@
-import React, { useContext, useCallback } from "react";
-import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-import { Button, Chip, Grid, Modal, IconButton, Box, Stack } from "@mui/material";
-import { Favorite, FavoriteOutlined, Delete } from "@mui/icons-material";
-import dayjs from "dayjs";
-import "dayjs/locale/ru";
-import localizedFormat from "dayjs/plugin/localizedFormat";
+import React, { useContext, useCallback, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
+import {
+  Button,
+  Chip,
+  Grid,
+  Modal,
+  IconButton,
+  Box,
+  Stack,
+} from '@mui/material';
+import { Favorite, FavoriteOutlined, Delete } from '@mui/icons-material';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
-import { isLiked } from "../../utils/post";
-import { UserContext } from "../../context/UserContext";
-import { PostContext } from "../../context/PostContext";
-import CreatePostForm from "../Forms/CreatePostForm/CreatePostForm";
-import api from "../../utils/api";
-import s from "./PostContent.module.css";
-import Spinner from "../Spinner/Spinner";
+import { isLiked } from '../../utils/post';
+import { UserContext } from '../../context/UserContext';
+import { PostContext } from '../../context/PostContext';
+import CreatePostForm from '../Forms/CreatePostForm/CreatePostForm';
+import api from '../../utils/api';
+import s from './PostContent.module.css';
+import Spinner from '../Spinner/Spinner';
 
-dayjs.locale("ru");
+dayjs.locale('ru');
 dayjs.extend(localizedFormat);
 
 const PostContent = ({ post, onPostDataChange }) => {
@@ -25,7 +33,7 @@ const PostContent = ({ post, onPostDataChange }) => {
 
   const liked = isLiked(post.likes, currentUser?._id);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -42,8 +50,8 @@ const PostContent = ({ post, onPostDataChange }) => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <Box pb={5} component="main">
-          <Link className={s.buttonBack} href="/" onClick={() => navigate(-1)}>
+        <Box pb={5} component="main" className={s.container}>
+          <Link className={s.buttonBack} onClick={() => navigate(-1)}>
             Назад
           </Link>
           <Box className={s.postHead}>
@@ -51,7 +59,7 @@ const PostContent = ({ post, onPostDataChange }) => {
             <div className={s.headBox}>
               {post.author && <p>{`Автор: ${post.author.name}`}</p>}
               {post.created_at && (
-                <p>{`Создано ${dayjs(post.created_at).format("LLL")}`}</p>
+                <p>{`Создано ${dayjs(post.created_at).format('LLL')}`}</p>
               )}
             </div>
           </Box>
@@ -102,7 +110,7 @@ const PostContent = ({ post, onPostDataChange }) => {
                       )
                     }
                   >
-                    {liked ? "В избранном" : "В избранное"}
+                    {liked ? 'В избранном' : 'В избранное'}
                   </Button>
                 </Grid>
                 <Grid item>

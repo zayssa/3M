@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import { Box, Link as MuiLink, MenuItem, MenuList } from '@mui/material';
 import s from './Navigation.module.css';
 
-
 const Navigation = () => {
-
   return (
     <Box width="300px" role="presentation">
       <MenuList>
@@ -21,11 +19,7 @@ const Navigation = () => {
         </MenuItem>
 
         <MenuItem className={s.li}>
-          <MuiLink
-            className={s.link}
-            component={Link}
-            to="/about"
-          >
+          <MuiLink className={s.link} component={Link} to="/about">
             О нас
           </MuiLink>
         </MenuItem>

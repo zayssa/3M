@@ -16,7 +16,7 @@ import {
 
 import { UserContext } from '../../context/UserContext';
 import { PostContext } from '../../context/PostContext';
-import { USER_DIALOG_KINDS } from '../../utils/constants';
+import { URLS, USER_DIALOG_KINDS } from '../../utils/constants';
 import LoginForm from '../Forms/LoginForm/LoginForm';
 import RegistrationForm from '../Forms/RegistrationForm/RegistrationForm';
 import ResetPasswordForm from '../Forms/ResetPasswordForm/ResetPasswordForm';
@@ -88,7 +88,10 @@ const User = () => {
       textAlign="center"
       gap={1}
     >
-      <IconButton component={Link} to={{ pathname: '/favourites' }}>
+      <IconButton
+        component={Link}
+        to={{ pathname: `/${URLS.posts}/${URLS.favourites}` }}
+      >
         <Badge badgeContent={favourites?.length} color="primary">
           <FavoriteIcon />
         </Badge>
@@ -101,7 +104,7 @@ const User = () => {
         <Typography variant="caption">{currentUser.about}</Typography>
       </Box>
 
-      <IconButton component={Link} to={'/user'}>
+      <IconButton component={Link} to={`/${URLS.user}`}>
         <Avatar src={currentUser.avatar} alt={currentUser.name}></Avatar>
       </IconButton>
 

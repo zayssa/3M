@@ -1,13 +1,17 @@
-import React from "react";
-import s from "./UserInfo.module.css";
-import { Typography, Box } from "@mui/material";
+import React, { useContext } from 'react';
+import { Typography, Box } from '@mui/material';
 
-const UserInfo = ({ name, about, group, email }) => {
+import s from './UserInfo.module.css';
+import { UserContext } from '../../context/UserContext';
+
+const UserInfo = () => {
+  const { currentUser } = useContext(UserContext);
+
   return (
     <section className={s.userInfo}>
       <Typography
         sx={{
-          fontFamily: "Pangolin",
+          fontFamily: 'Pangolin',
         }}
         variant="h3"
         className={s.title}
@@ -22,16 +26,16 @@ const UserInfo = ({ name, about, group, email }) => {
         </div>
         <div className={s.box}>
           <Typography lineHeight="2" className={s.name}>
-            <b>ФИО:</b> {name}
+            <b>ФИО:</b> {currentUser.name}
           </Typography>
           <Typography lineHeight="2" className={s.about}>
-            <b>Статус:</b> {about}
+            <b>Статус:</b> {currentUser.about}
           </Typography>
           <Typography lineHeight="2" className={s.group}>
-            <b>Группа:</b> {group}
+            <b>Группа:</b> {currentUser.group}
           </Typography>
           <Typography lineHeight="2" className={s.contacts}>
-            <b>Контакты:</b> {email}
+            <b>Контакты:</b> {currentUser.email}
           </Typography>
         </div>
       </Box>

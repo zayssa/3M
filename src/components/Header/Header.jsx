@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -7,14 +8,15 @@ import {
   Link as LinkMui,
   Drawer,
   Container,
-} from "@mui/material";
-import { Menu as MenuIcon } from "@mui/icons-material";
+} from '@mui/material';
+import { Menu as MenuIcon } from '@mui/icons-material';
 
-import User from "../User/User";
-import Search from "../Search/Search";
-import Navigation from "../Navigation/Navigation";
-import logo from "./img/blue-PhotoRoom.png-PhotoRoom.png";
-import s from "./Header.module.css";
+import User from '../User/User';
+import Search from '../Search/Search';
+import Navigation from '../Navigation/Navigation';
+import logo from './img/blue-PhotoRoom.png-PhotoRoom.png';
+import s from './Header.module.css';
+import { URLS } from '../../utils/constants';
 
 const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -24,9 +26,9 @@ const Header = () => {
   return (
     <AppBar
       sx={{
-        position: "sticky",
-        bgcolor: "lightblue",
-        color: "black",
+        position: 'sticky',
+        bgcolor: 'lightblue',
+        color: 'black',
       }}
     >
       <Container>
@@ -46,7 +48,7 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
 
-            <LinkMui href="/" className={s.logo}>
+            <LinkMui component={Link} to={`/${URLS.main}`} className={s.logo}>
               <img src={logo} alt="Логотип" />
             </LinkMui>
 

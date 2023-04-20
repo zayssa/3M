@@ -106,18 +106,18 @@ const Post = ({ post }) => {
                 </Typography>
 
                 <Stack
-                className={s.chips}
+                  className={s.chips}
                   spacing={0.5}
                   flexWrap="wrap"
                   direction="row"
                   margin="10px 0px 0px 0px"
-                  alignItems='center'
+                  alignItems="center"
                 >
                   {post.tags &&
                     post.tags
                       .filter((tag) => tag.length > 0)
                       .map((tag, idx) => (
-                        <Stack margin="5px 0px" className={s.chip}>
+                        <Stack margin="5px 0px" className={s.chip} key={tag}>
                           <Chip
                             key={idx}
                             color="primary"
@@ -138,7 +138,7 @@ const Post = ({ post }) => {
                   color="primary"
                   size="small"
                 >
-                  <Favorite color={isPostLiked ? "error" : "grey"} />
+                  <Favorite color={isPostLiked ? 'error' : 'grey'} />
                 </Badge>
               </IconButton>
 
