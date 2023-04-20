@@ -35,7 +35,7 @@ const MainPreview = () => {
               className={s.button}
               variant="contained"
             >
-              Каталог <Arrow className={s.arrowRight} />{" "}
+              Все посты
             </Button>
           </Box>
         </Container>

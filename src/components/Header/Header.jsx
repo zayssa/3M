@@ -3,7 +3,6 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Typography,
   Box,
   Link as LinkMui,
   Drawer,
@@ -47,11 +46,11 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
 
-            <LinkMui href="/">
-              <img className={s.logo} src={logo} alt="Логотип" />
+            <LinkMui href="/" className={s.logo}>
+              <img src={logo} alt="Логотип" />
             </LinkMui>
 
-            <Box mx="auto">
+            <Box className={s.search} mx="auto">
               <Search />
             </Box>
 

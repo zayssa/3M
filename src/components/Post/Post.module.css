@@ -8,3 +8,11 @@
     text-decoration: none;
     color: inherit;
 }
+
+.chips {
+margin: 10px 0 0 0 !important;
+}
+
+.chip {
+    margin: 3px 2px !important;
+}

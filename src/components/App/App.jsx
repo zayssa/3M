@@ -119,42 +119,43 @@ const App = () => {
           <SnackbarContext.Provider value={{ message, setMessage }}>
             <Header />
 
-
-              <main className="content">
-                <Routes>
-                  <Route index element={<MainPage />} />
-                  <Route
-                    element={
-                      <>
+            <main className="content">
+              <Routes>
+                <Route index element={<MainPage />} />
+                <Route
+                  element={
+                    <>
+                      <Container>
                         <Breadcrumbs />
                         <Outlet />
-                      </>
-                    }
-                  >
-                    <Route index element={<Navigate to="/posts" replace />} />
-                    <Route path="/posts/">
-                      <Route
-                        index
-                        element={
-                          <CatalogPage
-                            posts={posts}
-                            handlePostLike={handlePostLike}
-                            currentUser={currentUser}
-                          />
-                        }
-                      />
-                      <Route path=":postId" element={<PostPage />} />
-                    </Route>
-                    <Route path="/favourites" element={<FavouritesPage />} />
-                    <Route path="/about" element={<AboutPage />} />
-                    <Route path="*" element={<NotFoundPage />} />
-                    <Route path="/favourites" element={<FavouritesPage />} />
-                    <Route path="/about" element={<AboutPage />} />
-                    <Route path="*" element={<NotFoundPage />} />
-                    <Route path="/user" element={<UserPage />} />
+                      </Container>
+                    </>
+                  }
+                >
+                  <Route index element={<Navigate to="/posts" replace />} />
+                  <Route path="/posts/">
+                    <Route
+                      index
+                      element={
+                        <CatalogPage
+                          posts={posts}
+                          handlePostLike={handlePostLike}
+                          currentUser={currentUser}
+                        />
+                      }
+                    />
+                    <Route path=":postId" element={<PostPage />} />
                   </Route>
-                </Routes>
-              </main>
+                  <Route path="/favourites" element={<FavouritesPage />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                  <Route path="/favourites" element={<FavouritesPage />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                  <Route path="/user" element={<UserPage />} />
+                </Route>
+              </Routes>
+            </main>
 
             <Footer />
 
