@@ -1,0 +1,16 @@
+.link {
+    text-align: center;
+    text-decoration: none !important;
+    font-size: 20px;
+}
+
+.li {
+    justify-content: center !important;
+    margin-top: 20px !important;
+
+}
+
+.active {
+    color: rgb(0, 232, 51) !important;
+    background-color: rgb(16, 174, 226) !important;
+}

@@ -18,6 +18,7 @@ import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import FavouritesPage from '../../pages/FavouritesPage/FavouritesPage';
 import AboutPage from '../../pages/AboutPage/AboutPage';
 import UserPage from '../../pages/UserPage/UserPage.jsx';
+import MainPage from '../../pages/MainPage/MainPage.jsx'
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -99,10 +100,10 @@ const App = () => {
     <Box
       sx={{
         display: {
-          md: 'flex',
+          md: "flex",
         },
-        flexDirection: 'column',
-        minHeight: '100vh',
+        flexDirection: "column",
+        minHeight: "100vh",
       }}
     >
       <UserContext.Provider value={{ currentUser, isLoading }}>
@@ -118,17 +119,16 @@ const App = () => {
           <SnackbarContext.Provider value={{ message, setMessage }}>
             <Header />
 
-            <Container
-              sx={{
-                flexGrow: 1,
-              }}
-            >
+            <main className="content">
               <Routes>
+                <Route index element={<MainPage />} />
                 <Route
                   element={
                     <>
-                      <Breadcrumbs />
-                      <Outlet />
+                      <Container>
+                        <Breadcrumbs />
+                        <Outlet />
+                      </Container>
                     </>
                   }
                 >
@@ -155,21 +155,21 @@ const App = () => {
                   <Route path="/user" element={<UserPage />} />
                 </Route>
               </Routes>
-            </Container>
+            </main>
 
             <Footer />
 
             <Snackbar
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
+                vertical: "top",
+                horizontal: "center",
               }}
               open={Boolean(message) && !message.hide}
               autoHideDuration={3000}
               onClose={handleSnackbarClose}
             >
-              <Alert severity={message?.severity || 'error'}>
-                {message?.text || 'Произошла ошибка'}
+              <Alert severity={message?.severity || "error"}>
+                {message?.text || "Произошла ошибка"}
               </Alert>
             </Snackbar>
           </SnackbarContext.Provider>
