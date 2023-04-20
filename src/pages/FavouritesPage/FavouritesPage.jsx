@@ -1,22 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+
 import { PostContext } from '../../context/PostContext';
+import { BreadcrumbsContext } from '../../context/BreadcrumbsContext';
 import PostList from '../../components/PostList/PostList';
 import ContentHeader from '../../components/ContentHeader/ContentHeader';
-import { Link, Navigate } from 'react-router-dom';
-import s from './FavouritesPage.module.css';
+import { URLS } from '../../utils/constants';
 
 const FavouritesPage = () => {
   const { favourites } = useContext(PostContext);
+  const { breadcrumbs, addBreadcrumbsPoint } = useContext(BreadcrumbsContext);
+
+  useEffect(() => {
+    addBreadcrumbsPoint({
+      label: 'Избранное',
+      url: `/${URLS.posts}/${URLS.favourites}`,
+    });
+  }, [addBreadcrumbsPoint, breadcrumbs]);
 
   return (
     <>
-      {/* <Link className={s.buttonBack} href="/posts" onClick={() => Navigate(-1)}>
-        Назад
-      </Link> */}
       <ContentHeader title="Избранное" />
-      <div>
-        <PostList posts={favourites} />
-      </div>
+
+      <PostList posts={favourites} />
     </>
   );
 };

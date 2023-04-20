@@ -14,3 +14,11 @@ export const USER_DIALOG_KINDS = {
   registration: 'registration',
   recovery: 'recovery',
 };
+
+export const URLS = {
+  main: '',
+  posts: 'posts',
+  favourites: 'favourites',
+  about: 'about',
+  user: 'user',
+};

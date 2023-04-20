@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Button, Chip, Grid, Modal, IconButton, Box } from '@mui/material';
@@ -25,7 +25,7 @@ const PostContent = ({ post, onPostDataChange }) => {
 
   const liked = isLiked(post.likes, currentUser?._id);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -43,7 +43,7 @@ const PostContent = ({ post, onPostDataChange }) => {
         <Spinner />
       ) : (
         <Box pb={5} component="main" className={s.container}>
-          <Link className={s.buttonBack} href="/" onClick={() => navigate(-1)}>
+          <Link className={s.buttonBack} onClick={() => navigate(-1)}>
             Назад
           </Link>
           <h2 className={s.title}>{post.title}</h2>
