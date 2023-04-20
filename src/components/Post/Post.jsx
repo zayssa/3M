@@ -11,6 +11,7 @@ import {
   Collapse,
   Grid,
   IconButton,
+  Stack,
   Typography,
 } from '@mui/material';
 import {
@@ -104,18 +105,29 @@ const Post = ({ post }) => {
                   {post.text}
                 </Typography>
 
-                {post.tags &&
-                  post.tags
-                    .filter((tag) => tag.length > 0)
-                    .map((tag, idx) => (
-                      <Chip
-                        key={idx}
-                        color="primary"
-                        label={tag}
-                        size="small"
-                        sx={{ marginRight: 1 }}
-                      />
-                    ))}
+                <Stack
+                className={s.chips}
+                  spacing={0.5}
+                  flexWrap="wrap"
+                  direction="row"
+                  margin="10px 0px 0px 0px"
+                  alignItems='center'
+                >
+                  {post.tags &&
+                    post.tags
+                      .filter((tag) => tag.length > 0)
+                      .map((tag, idx) => (
+                        <Stack margin="5px 0px" className={s.chip}>
+                          <Chip
+                            key={idx}
+                            color="primary"
+                            label={tag}
+                            size="small"
+                            sx={{ marginRight: 1 }}
+                          />
+                        </Stack>
+                      ))}
+                </Stack>
               </CardContent>
             </Link>
 
@@ -126,7 +138,7 @@ const Post = ({ post }) => {
                   color="primary"
                   size="small"
                 >
-                  <Favorite color={isPostLiked ? 'error' : 'grey'} />
+                  <Favorite color={isPostLiked ? "error" : "grey"} />
                 </Badge>
               </IconButton>
 

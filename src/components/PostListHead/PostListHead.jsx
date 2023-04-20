@@ -15,10 +15,10 @@ const PostListHead = () => {
   return (
     <Box
       sx={{
-        height: 150,
-        marginTop: 5,
+        height: 100,
+        marginTop: 3,
         position: 'relative',
-        marginBottom: 10,
+        marginBottom: 6,
       }}
     >
       <Typography

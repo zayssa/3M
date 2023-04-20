@@ -1,26 +1,14 @@
 import React from 'react';
 import s from './Footer.module.css';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Box,
-  Link,
-  Container,
-} from '@mui/material';
+import { Toolbar, Typography, Box, Link, Container } from '@mui/material';
 import { Facebook, Instagram, Telegram, Twitter } from '@mui/icons-material';
 
 const Footer = () => {
   return (
-    <AppBar
-      component="footer"
+    <footer
+      className={s.footer}
       position="static"
-      sx={{
-        marginTop: 'auto',
-        bgcolor: 'lightblue',
-        color: 'black',
-        flexShrink: 0,
-      }}
+      sx={{ bgcolor: 'text.primary', flexShrink: 0 }}
     >
       <Toolbar>
         <Container
@@ -34,7 +22,7 @@ const Footer = () => {
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              Реактивные посты
+              REACTивный проект
             </Typography>
             <Box
               sx={{
@@ -64,7 +52,7 @@ const Footer = () => {
           </Box>
         </Container>
       </Toolbar>
-    </AppBar>
+    </footer>
   );
 };
 

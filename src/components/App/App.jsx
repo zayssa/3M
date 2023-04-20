@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState, useCallback } from 'react';
-import { Navigate, Outlet, Route, Routes } from 'react-router';
+import { Outlet, Route, Routes } from 'react-router';
 import { Alert, Container, Snackbar } from '@mui/material';
 import { Box } from '@mui/material';
 
@@ -19,6 +19,7 @@ import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import FavouritesPage from '../../pages/FavouritesPage/FavouritesPage';
 import AboutPage from '../../pages/AboutPage/AboutPage';
 import UserPage from '../../pages/UserPage/UserPage.jsx';
+import MainPage from '../../pages/MainPage/MainPage.jsx';
 import { URLS } from '../../utils/constants.js';
 
 const App = () => {
@@ -159,7 +160,7 @@ const App = () => {
                       </>
                     }
                   >
-                    <Route index element={<Navigate to="/posts" replace />} />
+                    <Route index element={<MainPage />} />
                     <Route path={`/${URLS.posts}`}>
                       <Route
                         index

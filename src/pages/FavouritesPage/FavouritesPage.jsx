@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Container } from '@mui/material';
 
 import { PostContext } from '../../context/PostContext';
 import { BreadcrumbsContext } from '../../context/BreadcrumbsContext';
@@ -18,11 +19,12 @@ const FavouritesPage = () => {
   }, [addBreadcrumbsPoint, breadcrumbs]);
 
   return (
-    <>
+    <Container>
       <ContentHeader title="Избранное" />
-
-      <PostList posts={favourites} />
-    </>
+      <div>
+        <PostList posts={favourites} />
+      </div>
+    </Container>
   );
 };
 
