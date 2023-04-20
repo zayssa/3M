@@ -9,14 +9,16 @@ import { URLS } from '../../utils/constants';
 
 const UserPage = () => {
   const { isLoading } = useContext(UserContext);
-  const { addBreadcrumbsPoint } = useContext(BreadcrumbsContext);
+  const { setBreadcrumbs } = useContext(BreadcrumbsContext);
 
   useEffect(() => {
-    addBreadcrumbsPoint({
-      label: 'Обо мне',
-      url: `/${URLS.user}`,
-    });
-  }, [addBreadcrumbsPoint]);
+    setBreadcrumbs([
+      {
+        label: 'Обо мне',
+        url: `/${URLS.user}`,
+      },
+    ]);
+  }, [setBreadcrumbs]);
 
   return (
     <>

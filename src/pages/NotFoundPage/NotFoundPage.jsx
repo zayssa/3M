@@ -4,13 +4,15 @@ import { BreadcrumbsContext } from '../../context/BreadcrumbsContext';
 import { URLS } from '../../utils/constants';
 
 const NotFoundPage = () => {
-  const { addBreadcrumbsPoint } = useContext(BreadcrumbsContext);
+  const { setBreadcrumbs } = useContext(BreadcrumbsContext);
 
   useEffect(() => {
-    addBreadcrumbsPoint({
-      label: 'Неизвестная страница',
-    });
-  }, [addBreadcrumbsPoint]);
+    setBreadcrumbs([
+      {
+        label: 'Неизвестная страница',
+      },
+    ]);
+  }, [setBreadcrumbs]);
 
   return (
     <NotFound

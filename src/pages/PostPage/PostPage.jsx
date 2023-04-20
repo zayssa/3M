@@ -9,18 +9,24 @@ import { BreadcrumbsContext } from '../../context/BreadcrumbsContext';
 import { URLS } from '../../utils/constants';
 
 const PostPage = () => {
-  const { addBreadcrumbsPoint } = useContext(BreadcrumbsContext);
+  const { setBreadcrumbs } = useContext(BreadcrumbsContext);
   const { postId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [post, setPost] = useState({});
 
   useEffect(() => {
-    addBreadcrumbsPoint({
-      label: post.title || '...',
-      url: `/${URLS.posts}/${postId}`,
-    });
-  }, [addBreadcrumbsPoint, postId, post]);
+    setBreadcrumbs([
+      {
+        label: 'Все посты',
+        url: `/${URLS.posts}`,
+      },
+      {
+        label: post.title || '...',
+        url: `/${URLS.posts}/${postId}`,
+      },
+    ]);
+  }, [setBreadcrumbs, postId, post]);
 
   const reloadPostData = useCallback(() => {
     setIsLoading(true);

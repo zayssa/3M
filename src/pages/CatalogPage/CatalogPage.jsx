@@ -6,20 +6,24 @@ import { skeletonFakeArray } from './data';
 import PostListHead from '../../components/PostListHead/PostListHead';
 import { BreadcrumbsContext } from '../../context/BreadcrumbsContext';
 import { URLS } from '../../utils/constants';
+import { UserContext } from '../../context/UserContext';
 
-const PostsPage = ({ handlePostLike, currentUser }) => {
-  const { posts } = useContext(PostContext);
-  const { breadcrumbs, addBreadcrumbsPoint } = useContext(BreadcrumbsContext);
+const PostsPage = () => {
+  const { posts, handlePostLike } = useContext(PostContext);
+  const { currentUser } = useContext(UserContext);
+  const { setBreadcrumbs } = useContext(BreadcrumbsContext);
   const skeletonArray = skeletonFakeArray.map((el) => (
     <PostSkeleton key={el} />
   ));
 
   useEffect(() => {
-    addBreadcrumbsPoint({
-      label: 'Все посты',
-      url: `/${URLS.posts}`,
-    });
-  }, [addBreadcrumbsPoint, breadcrumbs]);
+    setBreadcrumbs([
+      {
+        label: 'Все посты',
+        url: `/${URLS.posts}`,
+      },
+    ]);
+  }, [setBreadcrumbs]);
 
   return (
     <>

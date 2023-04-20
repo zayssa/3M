@@ -1,14 +1,24 @@
 import React from 'react';
-import s from './Footer.module.css';
-import { Toolbar, Typography, Box, Link, Container } from '@mui/material';
+import {
+  Toolbar,
+  Typography,
+  Box,
+  Link,
+  Container,
+  AppBar,
+} from '@mui/material';
 import { Facebook, Instagram, Telegram, Twitter } from '@mui/icons-material';
 
 const Footer = () => {
   return (
-    <footer
-      className={s.footer}
+    <AppBar
+      component="footer"
       position="static"
-      sx={{ bgcolor: 'text.primary', flexShrink: 0 }}
+      sx={{
+        bgcolor: 'lightblue',
+        color: 'black',
+        flexShrink: 0,
+      }}
     >
       <Toolbar>
         <Container
@@ -16,7 +26,6 @@ const Footer = () => {
         >
           <Box>
             <Typography
-              className={s.text}
               variant="h6"
               noWrap
               component="div"
@@ -52,7 +61,7 @@ const Footer = () => {
           </Box>
         </Container>
       </Toolbar>
-    </footer>
+    </AppBar>
   );
 };
 

@@ -5,14 +5,16 @@ import { BreadcrumbsContext } from '../../context/BreadcrumbsContext';
 import { URLS } from '../../utils/constants';
 
 const AboutPage = () => {
-  const { addBreadcrumbsPoint } = useContext(BreadcrumbsContext);
+  const { setBreadcrumbs } = useContext(BreadcrumbsContext);
 
   useEffect(() => {
-    addBreadcrumbsPoint({
-      label: 'О нас',
-      url: `/${URLS.about}`,
-    });
-  }, [addBreadcrumbsPoint]);
+    setBreadcrumbs([
+      {
+        label: 'О нас',
+        url: `/${URLS.about}`,
+      },
+    ]);
+  }, [setBreadcrumbs]);
 
   return (
     <>

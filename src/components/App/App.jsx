@@ -99,33 +99,8 @@ const App = () => {
     }, 500);
   }, [message]);
 
-  const resetBreadcrumbsPoints = useCallback(() => {
-    setBreadcrumbs([
-      {
-        label: 'Главная',
-        url: '/',
-      },
-    ]);
-  }, []);
-
-  useEffect(() => {
-    resetBreadcrumbsPoints();
-  }, [resetBreadcrumbsPoints]);
-
-  const addBreadcrumbsPoint = useCallback((point) => {
-    setBreadcrumbs((prev) => {
-      const result = [...prev];
-      if (prev.findIndex((item) => item.url === point.url) === -1) {
-        result.push(point);
-      }
-      return result;
-    });
-  }, []);
-
   return (
-    <BreadcrumbsContext.Provider
-      value={{ breadcrumbs, addBreadcrumbsPoint, resetBreadcrumbsPoints }}
-    >
+    <BreadcrumbsContext.Provider value={{ breadcrumbs, setBreadcrumbs }}>
       <UserContext.Provider value={{ currentUser, isLoading }}>
         <PostContext.Provider
           value={{
@@ -160,24 +135,21 @@ const App = () => {
                       </>
                     }
                   >
-                    <Route index element={<MainPage />} />
-                    <Route path={`/${URLS.posts}`}>
-                      <Route
-                        index
-                        element={
-                          <CatalogPage
-                            posts={posts}
-                            handlePostLike={handlePostLike}
-                            currentUser={currentUser}
-                          />
-                        }
-                      />
-                      <Route
-                        path={URLS.favourites}
-                        element={<FavouritesPage />}
-                      />
-                      <Route path=":postId" element={<PostPage />} />
-                    </Route>
+                    <Route path={`/${URLS.main}`} element={<MainPage />} />
+                    <Route
+                      path={`/${URLS.posts}`}
+                      element={<CatalogPage />}
+                      exact
+                    />
+                    <Route
+                      path={`/${URLS.posts}/${URLS.favourites}`}
+                      element={<FavouritesPage />}
+                      exact
+                    />
+                    <Route
+                      path={`/${URLS.posts}/:postId`}
+                      element={<PostPage />}
+                    />
                     <Route path={`/${URLS.about}`} element={<AboutPage />} />
                     <Route path={`/${URLS.user}`} element={<UserPage />} />
                     <Route path="*" element={<NotFoundPage />} />

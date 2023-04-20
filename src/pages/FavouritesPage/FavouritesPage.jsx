@@ -9,14 +9,20 @@ import { URLS } from '../../utils/constants';
 
 const FavouritesPage = () => {
   const { favourites } = useContext(PostContext);
-  const { breadcrumbs, addBreadcrumbsPoint } = useContext(BreadcrumbsContext);
+  const { setBreadcrumbs } = useContext(BreadcrumbsContext);
 
   useEffect(() => {
-    addBreadcrumbsPoint({
-      label: 'Избранное',
-      url: `/${URLS.posts}/${URLS.favourites}`,
-    });
-  }, [addBreadcrumbsPoint, breadcrumbs]);
+    setBreadcrumbs([
+      {
+        label: 'Все посты',
+        url: `/${URLS.posts}`,
+      },
+      {
+        label: 'Избранное',
+        url: `/${URLS.posts}/${URLS.favourites}`,
+      },
+    ]);
+  }, [setBreadcrumbs]);
 
   return (
     <Container>
