@@ -1,0 +1,19 @@
+.footer {
+    position: static;
+}
+
+@media (max-width: 850px) {
+    .adaptiveFooter {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+}
+
+@media (max-width: 550px) {
+    .adaptiveFooter {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+}

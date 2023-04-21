@@ -7,6 +7,7 @@ import PostListHead from '../../components/PostListHead/PostListHead';
 import { BreadcrumbsContext } from '../../context/BreadcrumbsContext';
 import { URLS } from '../../utils/constants';
 import { UserContext } from '../../context/UserContext';
+import { Container } from '@mui/material';
 
 const PostsPage = () => {
   const { posts, handlePostLike } = useContext(PostContext);
@@ -29,7 +30,9 @@ const PostsPage = () => {
     <>
       <PostListHead />
       {posts.length === 0 ? (
-        <>{skeletonArray}</>
+        <Container>
+          {skeletonArray}
+        </Container>
       ) : (
         <PostList
           posts={posts}

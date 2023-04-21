@@ -9,7 +9,14 @@
 }
 
 .image {
-    width: 100%;
+    width: 200px;
+    height: 300px;
+}
+
+.image img {
+    width: inherit;
+    height: inherit;
+    object-fit: fill;
 }
 
 .buttonBack {
@@ -53,3 +60,22 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+@media (max-width: 700px) {
+    .image {
+        margin-right: 20px !important;
+    }
+}
+
+@media (max-width: 500px) {
+    .content {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .description {
+        margin-top: 60px;
+        text-align: center;
+    }
+} 
