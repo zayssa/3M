@@ -1,11 +1,5 @@
 import React, { useRef } from 'react';
-import {
-  Button as ButtonMui,
-  Box,
-  Typography,
-  Modal,
-  Container,
-} from '@mui/material';
+import { Button, Box, Typography, Modal, Container } from '@mui/material';
 
 import CreatePostForm from '../Forms/CreatePostForm/CreatePostForm';
 import s from './PostListHead.module.css';
@@ -24,7 +18,6 @@ const PostListHead = () => {
       <Box
         className={s.wrapper}
         sx={{
-          height: 100,
           marginTop: 3,
           position: 'relative',
           marginBottom: 6,
@@ -47,14 +40,14 @@ const PostListHead = () => {
             justifyContent: { md: 'flex-end' },
           }}
         >
-          <ButtonMui
+          <Button
             variant="contained"
             color="primary"
             onClick={handleOpen}
             sx={{ flexGrow: { xs: 1, md: 0 } }}
           >
             Создать пост
-          </ButtonMui>
+          </Button>
         </Box>
         <Modal
           keepMounted
