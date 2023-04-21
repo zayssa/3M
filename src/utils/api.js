@@ -16,7 +16,7 @@ class Api {
 
   protectedFetch(...attributes) {
     if (!this.token) {
-      return new Promise(() => {});
+      return Promise.reject('Authorization required');
     }
 
     return fetch(...attributes);

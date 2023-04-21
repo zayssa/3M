@@ -1,6 +1,4 @@
 import React, { useContext, useCallback, useState } from 'react';
-import { useNavigate } from 'react-router';
-import { Link } from 'react-router-dom';
 import {
   Button,
   Chip,
@@ -28,7 +26,6 @@ dayjs.locale('ru');
 dayjs.extend(localizedFormat);
 
 const PostContent = ({ post, onPostDataChange }) => {
-  const navigate = useNavigate();
   const { currentUser } = useContext(UserContext);
   const { handlePostLike, isLoading } = useContext(PostContext);
 
@@ -52,13 +49,13 @@ const PostContent = ({ post, onPostDataChange }) => {
         <Spinner />
       ) : (
         <Container>
-          <Box pb={5} component="main" sx={{marginBottom: '20px'}}>
+          <Box pb={5} component="main" sx={{ marginBottom: '20px' }}>
             <Box className={s.postHead}>
               <h2 className={s.title}>{post.title}</h2>
               <div className={s.headBox}>
                 {post.author && <p>{`Автор: ${post.author.name}`}</p>}
                 {post.created_at && (
-                  <p>{`Создано ${dayjs(post.created_at).format("LLL")}`}</p>
+                  <p>{`Создано ${dayjs(post.created_at).format('LLL')}`}</p>
                 )}
               </div>
             </Box>
@@ -72,15 +69,13 @@ const PostContent = ({ post, onPostDataChange }) => {
                         post.tags
                           .filter((tag) => tag.length > 0)
                           .map((tag, idx) => (
-                            <Stack>
-                              <Chip
-                                key={idx}
-                                color="primary"
-                                label={tag}
-                                size="small"
-                                sx={{ marginRight: 1 }}
-                              />
-                            </Stack>
+                            <Chip
+                              key={idx}
+                              color="primary"
+                              label={tag}
+                              size="small"
+                              sx={{ marginRight: 1 }}
+                            />
                           ))}
                     </Stack>
                   </Grid>
@@ -105,7 +100,7 @@ const PostContent = ({ post, onPostDataChange }) => {
                         )
                       }
                     >
-                      {liked ? "В избранном" : "В избранное"}
+                      {liked ? 'В избранном' : 'В избранное'}
                     </Button>
                   </Grid>
                   <Grid item>
