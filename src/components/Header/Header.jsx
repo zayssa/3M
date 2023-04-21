@@ -35,7 +35,7 @@ const Header = () => {
         <Box py={1}>
           <Toolbar>
             <Drawer anchor="left" open={isDrawerOpen} onClose={onDrawerClose}>
-              <Navigation />
+              <Navigation onClose={onDrawerClose} />
             </Drawer>
 
             <IconButton
