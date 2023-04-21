@@ -13,14 +13,7 @@ const PostListHead = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <Box
-      sx={{
-        height: 100,
-        marginTop: 3,
-        position: 'relative',
-        marginBottom: 6,
-      }}
-    >
+    <Box mt={2} mb={4} position="relative">
       <Typography
         sx={{
           fontFamily: 'Pangolin',
@@ -30,14 +23,22 @@ const PostListHead = () => {
       >
         Мысли, мечтай, меняйся...
       </Typography>
-      <ButtonMui
-        sx={{ position: 'absolute', bottom: 10, right: 10 }}
-        variant="contained"
-        color="primary"
-        onClick={handleOpen}
+      <Box
+        mt={2}
+        sx={{
+          display: 'flex',
+          justifyContent: { md: 'flex-end' },
+        }}
       >
-        Создать пост
-      </ButtonMui>
+        <ButtonMui
+          variant="contained"
+          color="primary"
+          onClick={handleOpen}
+          sx={{ flexGrow: { xs: 1, md: 0 } }}
+        >
+          Создать пост
+        </ButtonMui>
+      </Box>
       <Modal
         keepMounted
         open={open}
