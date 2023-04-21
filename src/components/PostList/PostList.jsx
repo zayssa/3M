@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router';
 
 const PostList = ({ posts }) => {
   const [currentPage, setCurrentPage] = useState(1);
+
   const pagesCount = useMemo(() => {
     return Math.ceil(posts?.length / POSTS_PER_PAGE);
   }, [posts]);

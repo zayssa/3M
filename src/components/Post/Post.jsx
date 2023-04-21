@@ -69,114 +69,110 @@ const Post = ({ post }) => {
     });
   }, [post._id, getPostsList]);
 
-  return (
-    <>
-      {isLoading ? (
-        <PostSkeleton />
-      ) : (
-        <Grid container item xs={12} sm={6} md={4} lg={3}>
-          <Card className={s.post}>
-            <CardHeader
-              avatar={
-                <Avatar aria-label="recipe" src={post.author.avatar}>
-                  {post.author.name?.slice(0, 1).toUpperCase()}
-                </Avatar>
-              }
-              title={post.author.name}
-              subheader={dayjs(post.created_at).fromNow()}
-            />
-            <Link to={`/posts/${post._id}`} className={s.postHeaderLink}>
-              <CardMedia
-                component="img"
-                height="194"
-                image={post.image}
-                alt={`Изображение_${post.title}`}
-              />
-              <CardContent
-                sx={{
-                  flex: 1,
-                }}
-              >
-                <Typography variant="h5" component="h2" gutterBottom>
-                  {post.title}
-                </Typography>
+  return isLoading ? (
+    <PostSkeleton />
+  ) : (
+    <Grid container item xs={12} sm={6} md={4} lg={3}>
+      <Card className={s.post}>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" src={post.author.avatar}>
+              {post.author.name?.slice(0, 1).toUpperCase()}
+            </Avatar>
+          }
+          title={post.author.name}
+          subheader={dayjs(post.created_at).fromNow()}
+        />
+        <Link to={`/posts/${post._id}`} className={s.postHeaderLink}>
+          <CardMedia
+            component="img"
+            height="194"
+            image={post.image}
+            alt={`Изображение_${post.title}`}
+          />
+          <CardContent
+            sx={{
+              flex: 1,
+            }}
+          >
+            <Typography variant="h5" component="h2" gutterBottom>
+              {post.title}
+            </Typography>
 
-                <Typography variant="body2" noWrap color="text.secondary">
-                  {post.text}
-                </Typography>
+            <Typography variant="body2" noWrap color="text.secondary">
+              {post.text}
+            </Typography>
 
-                <Stack
-                  className={s.chips}
-                  spacing={0.5}
-                  flexWrap="wrap"
-                  direction="row"
-                  margin="10px 0px 0px 0px"
-                  alignItems="center"
-                >
-                  {post.tags &&
-                    post.tags
-                      .filter((tag) => tag.length > 0)
-                      .map((tag, idx) => (
-                        <Stack margin="5px 0px" className={s.chip} key={tag}>
-                          <Chip
-                            key={idx}
-                            color="primary"
-                            label={tag}
-                            size="small"
-                            sx={{ marginRight: 1 }}
-                          />
-                        </Stack>
-                      ))}
-                </Stack>
-              </CardContent>
-            </Link>
+            <Stack
+              className={s.chips}
+              spacing={0.5}
+              flexWrap="wrap"
+              direction="row"
+              margin="10px 0px 0px 0px"
+              alignItems="center"
+            >
+              {post.tags &&
+                post.tags
+                  .filter((tag) => tag.length > 0)
+                  .map((tag, idx) => (
+                    <Stack margin="5px 0px" className={s.chip} key={tag}>
+                      <Chip
+                        key={idx}
+                        color="primary"
+                        label={tag}
+                        size="small"
+                        sx={{ marginRight: 1 }}
+                      />
+                    </Stack>
+                  ))}
+            </Stack>
+          </CardContent>
+        </Link>
 
-            <CardActions disableSpacing>
-              <IconButton aria-label="add to favorites" onClick={handleLike}>
-                <Badge
-                  badgeContent={post.likes.length}
-                  color="primary"
-                  size="small"
-                >
-                  <Favorite color={isPostLiked ? 'error' : 'grey'} />
-                </Badge>
-              </IconButton>
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites" onClick={handleLike}>
+            <Badge
+              badgeContent={post.likes.length}
+              color="primary"
+              size="small"
+            >
+              <Favorite color={isPostLiked ? 'error' : 'grey'} />
+            </Badge>
+          </IconButton>
 
-              {post.author._id === currentUser._id && (
-                <IconButton sx={{ marginLeft: 2 }} onClick={handleDelete}>
-                  <Delete />
-                </IconButton>
-              )}
+          {post.author._id === currentUser._id && (
+            <IconButton sx={{ marginLeft: 2 }} onClick={handleDelete}>
+              <Delete />
+            </IconButton>
+          )}
 
-              <IconButton aria-label="add to comments">
-                <Badge
-                  badgeContent={post.comments.length}
-                  color="primary"
-                  size="small"
-                >
-                  <CommentIcon />
-                </Badge>
-              </IconButton>
+          <IconButton aria-label="add to comments">
+            <Badge
+              badgeContent={post.comments.length}
+              color="primary"
+              size="small"
+            >
+              <CommentIcon />
+            </Badge>
+          </IconButton>
 
-              <ExpandMoreStyled
-                expand={expanded}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="show more"
-              >
-                <ExpandMore />
-              </ExpandMoreStyled>
-            </CardActions>
+          <ExpandMoreStyled
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMore />
+          </ExpandMoreStyled>
+        </CardActions>
 
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-              <CardContent>
-                <Typography paragraph>{post.text}</Typography>
-              </CardContent>
-            </Collapse>
-          </Card>
-        </Grid>
-      )}
-    </>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography paragraph>{post.text}</Typography>
+          </CardContent>
+        </Collapse>
+      </Card>
+    </Grid>
   );
 };
 

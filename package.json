@@ -1,6 +1,6 @@
 {
   "name": "3m",
-  "homepage": "https://zayssa.github.io/3M/",
+  "homepage": "./",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

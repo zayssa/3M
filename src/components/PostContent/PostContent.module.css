@@ -9,14 +9,11 @@
 }
 
 .image {
-    width: 200px;
-    height: 300px;
+    width: 300px;
 }
 
 .image img {
     width: inherit;
-    height: inherit;
-    object-fit: fill;
 }
 
 .buttonBack {
