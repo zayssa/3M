@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Button, Box, Typography, Modal, Container } from '@mui/material';
 
 import CreatePostForm from '../Forms/CreatePostForm/CreatePostForm';
 import s from './PostListHead.module.css';
+import { UserContext } from '../../context/UserContext';
 
 const PostListHead = () => {
+  const { currentUser } = useContext(UserContext);
   const postEditForm = useRef();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -33,22 +35,24 @@ const PostListHead = () => {
         >
           Мысли, мечтай, меняйся...
         </Typography>
-        <Box
-          mt={2}
-          sx={{
-            display: 'flex',
-            justifyContent: { md: 'flex-end' },
-          }}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleOpen}
-            sx={{ flexGrow: { xs: 1, md: 0 } }}
+        {currentUser && (
+          <Box
+            mt={2}
+            sx={{
+              display: 'flex',
+              justifyContent: { md: 'flex-end' },
+            }}
           >
-            Создать пост
-          </Button>
-        </Box>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleOpen}
+              sx={{ flexGrow: { xs: 1, md: 0 } }}
+            >
+              Создать пост
+            </Button>
+          </Box>
+        )}
         <Modal
           keepMounted
           open={open}

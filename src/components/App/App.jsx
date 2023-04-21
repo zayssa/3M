@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState, useCallback } from 'react';
 import { Outlet, Route, Routes } from 'react-router';
-import { Alert, Container, Snackbar } from '@mui/material';
+import { Alert, Snackbar } from '@mui/material';
 import { Box } from '@mui/material';
 
 import Header from '../Header/Header.jsx';
@@ -114,9 +114,9 @@ const App = () => {
           <SnackbarContext.Provider value={{ message, setMessage }}>
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                minHeight: "100vh",
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: '100vh',
               }}
             >
               <Header />
@@ -126,12 +126,12 @@ const App = () => {
                   <Route
                     element={
                       <>
-                          <Breadcrumbs />
-                          <Outlet />
+                        <Breadcrumbs />
+                        <Outlet />
                       </>
                     }
                   >
-                    <Route path={`/${URLS.main}`} element={<MainPage />} />
+                    <Route index element={<MainPage />} />
                     <Route
                       path={`/${URLS.posts}`}
                       element={<CatalogPage />}
@@ -156,15 +156,15 @@ const App = () => {
 
               <Snackbar
                 anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "center",
+                  vertical: 'top',
+                  horizontal: 'center',
                 }}
                 open={Boolean(message) && !message.hide}
                 autoHideDuration={3000}
                 onClose={handleSnackbarClose}
               >
-                <Alert severity={message?.severity || "error"}>
-                  {message?.text || "Произошла ошибка"}
+                <Alert severity={message?.severity || 'error'}>
+                  {message?.text || 'Произошла ошибка'}
                 </Alert>
               </Snackbar>
             </Box>

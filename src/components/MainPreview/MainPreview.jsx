@@ -1,7 +1,6 @@
-import React from "react";
-import s from "./MainPreview.module.css";
-import { Box, Button, Container, Typography } from "@mui/material";
-import { ReactComponent as Arrow } from "./img/right-arrow.svg";
+import React from 'react';
+import s from './MainPreview.module.css';
+import { Box, Button, Container, Typography } from '@mui/material';
 
 const MainPreview = () => {
   return (
@@ -13,7 +12,7 @@ const MainPreview = () => {
               className={s.text}
               variant="h4"
               sx={{
-                fontFamily: "Bad Script",
+                fontFamily: 'Bad Script',
               }}
               color="#1976D2"
             >
@@ -30,11 +29,7 @@ const MainPreview = () => {
             >
               Рене Декарт
             </Typography>
-            <Button
-              href="/posts"
-              className={s.button}
-              variant="contained"
-            >
+            <Button href="/posts" className={s.button} variant="contained">
               Все посты
             </Button>
           </Box>

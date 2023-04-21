@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   AppBar,
@@ -17,8 +17,10 @@ import Navigation from '../Navigation/Navigation';
 import logo from './img/blue-PhotoRoom.png-PhotoRoom.png';
 import s from './Header.module.css';
 import { URLS } from '../../utils/constants';
+import { UserContext } from '../../context/UserContext';
 
 const Header = () => {
+  const { currentUser } = useContext(UserContext);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const onDrawerOpen = useCallback(() => setIsDrawerOpen(true), []);
   const onDrawerClose = useCallback(() => setIsDrawerOpen(false), []);
@@ -53,7 +55,7 @@ const Header = () => {
             </LinkMui>
 
             <Box className={s.search} mx="auto">
-              <Search />
+              {currentUser && <Search />}
             </Box>
 
             <User />

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 
 import MainPreview from '../../components/MainPreview/MainPreview';
-import MainRecomend from '../../components/MainRecommend/MainRecommend';
 import { BreadcrumbsContext } from '../../context/BreadcrumbsContext';
 
 const MainPage = () => {
