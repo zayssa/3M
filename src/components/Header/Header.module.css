@@ -9,3 +9,21 @@
 .search {
     margin: 0 auto;
 }
+
+@media (max-width: 850px) {
+    .search {
+        width: 25%;
+    }
+}
+
+@media (max-width: 550px) {
+    .logo {
+        width: 40%;
+    }
+}
+
+@media (max-width: 450px) {
+    .logo {
+        width: 100%;
+    }
+}

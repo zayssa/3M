@@ -25,7 +25,7 @@ const Navigation = () => {
         </MenuItem>
 
         <MenuItem className={s.li}>
-          <MuiLink className={s.link} component={Link} to="#">
+          <MuiLink className={s.link} component={Link} to="/user">
             Профиль
           </MuiLink>
         </MenuItem>

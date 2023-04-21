@@ -1,6 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import {
   Box,
+  Container,
   Breadcrumbs as MuiBreadcrumbs,
   Link as MuiLink,
 } from '@mui/material';
@@ -15,20 +16,26 @@ const Breadcrumbs = () => {
   return (
     !breadcrumbs.length || (
       <Box py={2}>
-        <MuiBreadcrumbs>
-          <MuiLink component={Link} to={`/${URLS.main}`}>
-            Главная
-          </MuiLink>
-          {breadcrumbs.map((point, idx) =>
-            idx === breadcrumbs.length - 1 ? (
-              <span key={point.label + idx}>{point.label}</span>
-            ) : (
-              <MuiLink component={Link} to={point.url} key={point.label + idx}>
-                {point.label}
-              </MuiLink>
-            )
-          )}
-        </MuiBreadcrumbs>
+        <Container>
+          <MuiBreadcrumbs>
+            <MuiLink component={Link} to={`/${URLS.main}`}>
+              Главная
+            </MuiLink>
+            {breadcrumbs.map((point, idx) =>
+              idx === breadcrumbs.length - 1 ? (
+                <span key={point.label + idx}>{point.label}</span>
+              ) : (
+                <MuiLink
+                  component={Link}
+                  to={point.url}
+                  key={point.label + idx}
+                >
+                  {point.label}
+                </MuiLink>
+              )
+            )}
+          </MuiBreadcrumbs>
+        </Container>
       </Box>
     )
   );

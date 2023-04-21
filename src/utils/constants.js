@@ -16,7 +16,7 @@ export const USER_DIALOG_KINDS = {
 };
 
 export const URLS = {
-  main: '',
+  main: 'main',
   posts: 'posts',
   favourites: 'favourites',
   about: 'about',

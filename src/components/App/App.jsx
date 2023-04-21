@@ -114,24 +114,20 @@ const App = () => {
           <SnackbarContext.Provider value={{ message, setMessage }}>
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                minHeight: '100vh',
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh",
               }}
             >
               <Header />
 
-              <Container
-                sx={{
-                  flexGrow: 1,
-                }}
-              >
+              <main className="content">
                 <Routes>
                   <Route
                     element={
                       <>
-                        <Breadcrumbs />
-                        <Outlet />
+                          <Breadcrumbs />
+                          <Outlet />
                       </>
                     }
                   >
@@ -155,21 +151,20 @@ const App = () => {
                     <Route path="*" element={<NotFoundPage />} />
                   </Route>
                 </Routes>
-              </Container>
-
+              </main>
               <Footer />
 
               <Snackbar
                 anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'center',
+                  vertical: "top",
+                  horizontal: "center",
                 }}
                 open={Boolean(message) && !message.hide}
                 autoHideDuration={3000}
                 onClose={handleSnackbarClose}
               >
-                <Alert severity={message?.severity || 'error'}>
-                  {message?.text || 'Произошла ошибка'}
+                <Alert severity={message?.severity || "error"}>
+                  {message?.text || "Произошла ошибка"}
                 </Alert>
               </Snackbar>
             </Box>
