@@ -1,7 +1,16 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Button, Chip, Grid, Modal, IconButton, Box } from '@mui/material';
+import {
+  Button,
+  Chip,
+  Grid,
+  Modal,
+  IconButton,
+  Box,
+  Stack,
+  Container,
+} from '@mui/material';
 import { Favorite, FavoriteOutlined, Delete } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
@@ -25,7 +34,7 @@ const PostContent = ({ post, onPostDataChange }) => {
 
   const liked = isLiked(post.likes, currentUser?._id);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -42,81 +51,102 @@ const PostContent = ({ post, onPostDataChange }) => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <Box pb={5} component="main" className={s.container}>
-          <Link className={s.buttonBack} href="/" onClick={() => navigate(-1)}>
-            Назад
-          </Link>
-          <h2 className={s.title}>{post.title}</h2>
-          <img className={s.image} src={post.image} alt="post illustration" />
-          <p>{post.text}</p>
-          {post.created_at && (
-            <p>{`Создано ${dayjs(post.created_at).format('LLL')}`}</p>
-          )}
-          {post.author && <p>{`Автор: ${post.author.name}`}</p>}
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs>
-              {post.tags &&
-                post.tags
-                  .filter((tag) => tag.length > 0)
-                  .map((tag, idx) => (
-                    <Chip
-                      key={idx}
-                      color="primary"
-                      label={tag}
-                      size="small"
-                      sx={{ marginRight: 1 }}
-                    />
-                  ))}
-            </Grid>
-            <Grid item>
-              <Button
-                onClick={handleLike}
-                startIcon={
-                  liked ? (
-                    <Favorite color="error" />
-                  ) : (
-                    <FavoriteOutlined color="primary" />
-                  )
-                }
-              >
-                {liked ? 'В избранном' : 'В избранное'}
-              </Button>
-            </Grid>
-            <Grid item>
-              {post.author?._id === currentUser?._id && (
-                <IconButton sx={{ marginLeft: 2 }} onClick={handleDelete}>
-                  <Delete />
-                </IconButton>
-              )}
-            </Grid>
-            <Grid item>
-              {post.author?._id === currentUser?._id && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleOpen}
+        <Container>
+          <Box pb={5} component="main" sx={{marginBottom: '20px'}}>
+            <Box className={s.postHead}>
+              <h2 className={s.title}>{post.title}</h2>
+              <div className={s.headBox}>
+                {post.author && <p>{`Автор: ${post.author.name}`}</p>}
+                {post.created_at && (
+                  <p>{`Создано ${dayjs(post.created_at).format("LLL")}`}</p>
+                )}
+              </div>
+            </Box>
+            <Box className={s.content}>
+              <Box className={s.image}>
+                <img src={post.image} alt="post illustration" />
+                <Grid container spacing={2} alignItems="center">
+                  <Grid item xs>
+                    <Stack direction="column" spacing={1}>
+                      {post.tags &&
+                        post.tags
+                          .filter((tag) => tag.length > 0)
+                          .map((tag, idx) => (
+                            <Stack>
+                              <Chip
+                                key={idx}
+                                color="primary"
+                                label={tag}
+                                size="small"
+                                sx={{ marginRight: 1 }}
+                              />
+                            </Stack>
+                          ))}
+                    </Stack>
+                  </Grid>
+                </Grid>
+              </Box>
+              <Box className={s.description}>
+                <p>{post.text}</p>
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  justifyContent="end"
                 >
-                  Изменить
-                </Button>
-              )}
-            </Grid>
-          </Grid>
-          <Modal
-            keepMounted
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="keep-mounted-modal-title"
-            aria-describedby="keep-mounted-modal-description"
-          >
-            <div>
-              <CreatePostForm
-                handleClose={handleClose}
-                postData={post}
-                onSave={onPostDataChange}
-              />
-            </div>
-          </Modal>
-        </Box>
+                  <Grid item>
+                    <Button
+                      onClick={handleLike}
+                      startIcon={
+                        liked ? (
+                          <Favorite color="error" />
+                        ) : (
+                          <FavoriteOutlined color="primary" />
+                        )
+                      }
+                    >
+                      {liked ? "В избранном" : "В избранное"}
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    {post.author?._id === currentUser?._id && (
+                      <IconButton sx={{ marginLeft: 2 }} onClick={handleDelete}>
+                        <Delete />
+                      </IconButton>
+                    )}
+                  </Grid>
+                  <Grid item>
+                    {post.author?._id === currentUser?._id && (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleOpen}
+                      >
+                        Изменить
+                      </Button>
+                    )}
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+
+            <Modal
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="keep-mounted-modal-title"
+              aria-describedby="keep-mounted-modal-description"
+            >
+              <div>
+                <CreatePostForm
+                  handleClose={handleClose}
+                  postData={post}
+                  onSave={onPostDataChange}
+                />
+              </div>
+            </Modal>
+          </Box>
+        </Container>
       )}
     </>
   );

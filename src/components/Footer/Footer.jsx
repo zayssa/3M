@@ -1,38 +1,47 @@
 import React from 'react';
-import s from './Footer.module.css';
 import {
-  AppBar,
   Toolbar,
   Typography,
   Box,
   Link,
   Container,
+  AppBar,
 } from '@mui/material';
 import { Facebook, Instagram, Telegram, Twitter } from '@mui/icons-material';
+import s from './Footer.module.css'
 
 const Footer = () => {
   return (
-    <AppBar position="static" sx={{ bgcolor: 'text.primary', flexShrink: 0 }}>
+    <AppBar
+      className={s.footer}
+      component="footer"
+      position="static"
+      sx={{
+        bgcolor: "lightblue",
+        color: "black",
+        flexShrink: 0,
+      }}
+    >
       <Toolbar>
         <Container
-          sx={{ display: { md: 'flex', justifyContent: 'space-between' } }}
+          className={s.adaptiveFooter}
+          sx={{ display: { md: "flex", justifyContent: "space-between" } }}
         >
           <Box>
             <Typography
-              className={s.text}
               variant="h6"
               noWrap
               component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
+              sx={{ display: { xs: "none", sm: "block" } }}
             >
-              Реактивные посты
+              REACTивный проект
             </Typography>
             <Box
               sx={{
                 display: {
-                  xs: 'none',
-                  md: 'flex',
-                  justifyContent: 'space-evenly',
+                  xs: "none",
+                  md: "flex",
+                  justifyContent: "space-evenly",
                 },
               }}
             >
@@ -50,7 +59,7 @@ const Footer = () => {
               </Link>
             </Box>
           </Box>
-          <Box sx={{ display: { md: 'flex', alignItems: 'center' } }}>
+          <Box sx={{ display: { md: "flex", alignItems: "center" } }}>
             <Typography>© 2023. Команда "3М"</Typography>
           </Box>
         </Container>

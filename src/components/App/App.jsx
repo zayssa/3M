@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState, useCallback } from 'react';
-import { Navigate, Outlet, Route, Routes } from 'react-router';
+import { Outlet, Route, Routes } from 'react-router';
 import { Alert, Container, Snackbar } from '@mui/material';
 import { Box } from '@mui/material';
 
@@ -11,6 +11,7 @@ import { isLiked } from '../../utils/post.js';
 import { UserContext } from '../../context/UserContext';
 import { PostContext } from '../../context/PostContext';
 import { SnackbarContext } from '../../context/SnackbarContext';
+import { BreadcrumbsContext } from '../../context/BreadcrumbsContext';
 import CatalogPage from '../../pages/CatalogPage/CatalogPage';
 import PostPage from '../../pages/PostPage/PostPage';
 import Breadcrumbs from '../Breadcrumbs/Breadcrumbs.jsx';
@@ -18,6 +19,8 @@ import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import FavouritesPage from '../../pages/FavouritesPage/FavouritesPage';
 import AboutPage from '../../pages/AboutPage/AboutPage';
 import UserPage from '../../pages/UserPage/UserPage.jsx';
+import MainPage from '../../pages/MainPage/MainPage.jsx';
+import { URLS } from '../../utils/constants.js';
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -25,6 +28,7 @@ const App = () => {
   const [favourites, setFavourites] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState();
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   const getPostsList = useCallback(() => {
     api.getPostList().then((postData) => {
@@ -96,15 +100,7 @@ const App = () => {
   }, [message]);
 
   return (
-    <Box
-      sx={{
-        display: {
-          md: 'flex',
-        },
-        flexDirection: 'column',
-        minHeight: '100vh',
-      }}
-    >
+    <BreadcrumbsContext.Provider value={{ breadcrumbs, setBreadcrumbs }}>
       <UserContext.Provider value={{ currentUser, isLoading }}>
         <PostContext.Provider
           value={{
@@ -116,66 +112,66 @@ const App = () => {
           }}
         >
           <SnackbarContext.Provider value={{ message, setMessage }}>
-            <Header />
-
-            <Container
+            <Box
               sx={{
-                flexGrow: 1,
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh",
               }}
             >
-              <Routes>
-                <Route
-                  element={
-                    <>
-                      <Breadcrumbs />
-                      <Outlet />
-                    </>
-                  }
-                >
-                  <Route index element={<Navigate to="/posts" replace />} />
-                  <Route path="/posts/">
+              <Header />
+
+              <main className="content">
+                <Routes>
+                  <Route
+                    element={
+                      <>
+                          <Breadcrumbs />
+                          <Outlet />
+                      </>
+                    }
+                  >
+                    <Route path={`/${URLS.main}`} element={<MainPage />} />
                     <Route
-                      index
-                      element={
-                        <CatalogPage
-                          posts={posts}
-                          handlePostLike={handlePostLike}
-                          currentUser={currentUser}
-                        />
-                      }
+                      path={`/${URLS.posts}`}
+                      element={<CatalogPage />}
+                      exact
                     />
-                    <Route path=":postId" element={<PostPage />} />
+                    <Route
+                      path={`/${URLS.posts}/${URLS.favourites}`}
+                      element={<FavouritesPage />}
+                      exact
+                    />
+                    <Route
+                      path={`/${URLS.posts}/:postId`}
+                      element={<PostPage />}
+                    />
+                    <Route path={`/${URLS.about}`} element={<AboutPage />} />
+                    <Route path={`/${URLS.user}`} element={<UserPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
                   </Route>
-                  <Route path="/favourites" element={<FavouritesPage />} />
-                  <Route path="/about" element={<AboutPage />} />
-                  <Route path="*" element={<NotFoundPage />} />
-                  <Route path="/favourites" element={<FavouritesPage />} />
-                  <Route path="/about" element={<AboutPage />} />
-                  <Route path="*" element={<NotFoundPage />} />
-                  <Route path="/user" element={<UserPage />} />
-                </Route>
-              </Routes>
-            </Container>
+                </Routes>
+              </main>
+              <Footer />
 
-            <Footer />
-
-            <Snackbar
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-              }}
-              open={Boolean(message) && !message.hide}
-              autoHideDuration={3000}
-              onClose={handleSnackbarClose}
-            >
-              <Alert severity={message?.severity || 'error'}>
-                {message?.text || 'Произошла ошибка'}
-              </Alert>
-            </Snackbar>
+              <Snackbar
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+                open={Boolean(message) && !message.hide}
+                autoHideDuration={3000}
+                onClose={handleSnackbarClose}
+              >
+                <Alert severity={message?.severity || "error"}>
+                  {message?.text || "Произошла ошибка"}
+                </Alert>
+              </Snackbar>
+            </Box>
           </SnackbarContext.Provider>
         </PostContext.Provider>
       </UserContext.Provider>
-    </Box>
+    </BreadcrumbsContext.Provider>
   );
 };
 

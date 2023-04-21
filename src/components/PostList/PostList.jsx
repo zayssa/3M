@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { Box, Grid, Pagination } from '@mui/material';
+import { Box, Container, Grid, Pagination } from '@mui/material';
 import Post from '../Post/Post';
 import { POSTS_PER_PAGE } from '../shared/constants';
 import NotFound from '../NotFound/NotFound';
@@ -20,32 +20,33 @@ const PostList = ({ posts }) => {
   const navigate = useNavigate();
 
   return (
-    <Box pb={5}>
-      {!posts.length ? (
-        <NotFound
-          title="Простите, по вашему запросу постов не найдено."
-          buttonText="Назад"
-          buttonAction={() => navigate(0)}
-        />
-      ) : (
-        <>
+    <Container>
+      <Box pb={5}>
+        {!posts.length ? (
+          <NotFound
+            title="Простите, по вашему запросу постов не найдено."
+            buttonText="Назад"
+            buttonAction={() => navigate(0)}
+          />
+        ) : (
+          <>
+            <Grid container spacing={5}>
+              {postsCurrent?.map((item) => (
+                <Post key={item._id} post={item} />
+              ))}
+            </Grid>
 
-          <Grid container spacing={5}>
-            {postsCurrent?.map((item) => (
-              <Post key={item._id} post={item} />
-            ))}
-          </Grid>
-
-          <Box pt={5} display="flex" justifyContent="center">
-            <Pagination
-              count={pagesCount}
-              page={currentPage}
-              onChange={handlePageChange}
-            />
-          </Box>
-        </>
-      )}
-    </Box>
+            <Box pt={5} display="flex" justifyContent="center">
+              <Pagination
+                count={pagesCount}
+                page={currentPage}
+                onChange={handlePageChange}
+              />
+            </Box>
+          </>
+        )}
+      </Box>
+    </Container>
   );
 };
 

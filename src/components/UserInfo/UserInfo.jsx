@@ -1,23 +1,47 @@
-import React from "react";
-import s from "./UserInfo.module.css";
-import { Typography, Box } from "@mui/material";
+import React, { useContext } from 'react';
+import { Typography, Box, Container } from '@mui/material';
 
-const UserInfo = ({ name, about, group, email }) => {
+import s from './UserInfo.module.css';
+import { UserContext } from '../../context/UserContext';
+
+const UserInfo = () => {
+  const { currentUser } = useContext(UserContext);
+
   return (
-    <section className={s.userInfo}>
-      <Typography variant="h3"  className={s.title}>
-        Мой профиль
-      </Typography>
-      <Box className={s.info}>
-        <Box className={s.infoTitle}>
-          <Typography variant="h5">Информация</Typography>
+    <Container>
+      <section className={s.userInfo}>
+        <Typography
+          sx={{
+            fontFamily: "Pangolin",
+          }}
+          variant="h3"
+          className={s.title}
+        >
+          Мой профиль
+        </Typography>
+        <Box className={s.info}>
+          <div className={s.box}>
+            <Typography className={s.infoTitle} variant="h5">
+              Информация
+            </Typography>
+          </div>
+          <div className={s.box}>
+            <Typography lineHeight="2" className={s.name}>
+              <b>ФИО:</b> {currentUser.name}
+            </Typography>
+            <Typography lineHeight="2" className={s.about}>
+              <b>Статус:</b> {currentUser.about}
+            </Typography>
+            <Typography lineHeight="2" className={s.group}>
+              <b>Группа:</b> {currentUser.group}
+            </Typography>
+            <Typography lineHeight="2" className={s.contacts}>
+              <b>Контакты:</b> {currentUser.email}
+            </Typography>
+          </div>
         </Box>
-        <Typography className={s.name}>{name}</Typography>
-        <Typography className={s.about}>{about}</Typography>
-        <Typography className={s.group}>Группа: {group}</Typography>
-        <Typography className={s.contacts}>Контакты: {email}</Typography>
-      </Box>
-    </section>
+      </section>
+    </Container>
   );
 };
 

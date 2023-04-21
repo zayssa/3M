@@ -1,18 +1,22 @@
 import React, { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
   IconButton,
-  Typography,
   Box,
   Link as LinkMui,
   Drawer,
+  Container,
 } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 
 import User from '../User/User';
 import Search from '../Search/Search';
 import Navigation from '../Navigation/Navigation';
+import logo from './img/blue-PhotoRoom.png-PhotoRoom.png';
+import s from './Header.module.css';
+import { URLS } from '../../utils/constants';
 
 const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -27,63 +31,35 @@ const Header = () => {
         color: 'black',
       }}
     >
-      <Box py={1}>
-        <Toolbar>
-          <Drawer anchor="left" open={isDrawerOpen} onClose={onDrawerClose}>
-            <Navigation />
-          </Drawer>
+      <Container>
+        <Box py={1}>
+          <Toolbar>
+            <Drawer anchor="left" open={isDrawerOpen} onClose={onDrawerClose}>
+              <Navigation onClose={onDrawerClose} />
+            </Drawer>
 
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="Навигация"
-            onClick={onDrawerOpen}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{
-              display: {
-                xs: 'none',
-                sm: 'block',
-                fontFamily: 'Pangolin',
-              },
-            }}
-            textAlign="center"
-          >
-            <LinkMui
-              href="/"
-              sx={{
-                display: { sm: 'block' },
-                fontFamily: 'Pangolin',
-              }}
-              underline="none"
-              color="grey"
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="Навигация"
+              onClick={onDrawerOpen}
             >
-              <Typography
-                color="text.primary"
-                fontFamily="Pangolin"
-                variant="h3"
-                lineHeight={1}
-              >
-                3М
-              </Typography>
-              мысли, мечтай, меняйся...
+              <MenuIcon />
+            </IconButton>
+
+            <LinkMui component={Link} to={`/${URLS.main}`} className={s.logo}>
+              <img src={logo} alt="Логотип" />
             </LinkMui>
-          </Typography>
 
-          <Box mx="auto">
-            <Search />
-          </Box>
+            <Box className={s.search} mx="auto">
+              <Search />
+            </Box>
 
-          <User />
-        </Toolbar>
-      </Box>
+            <User />
+          </Toolbar>
+        </Box>
+      </Container>
     </AppBar>
   );
 };

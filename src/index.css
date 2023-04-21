@@ -32,3 +32,21 @@ code {
 :root {
   --footer-bg-color: #212121;
 }
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex {
+  display: flex;
+}
+
+.content {
+  /* display: flex !important; */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  flex-grow: 1;
+}
+

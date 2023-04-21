@@ -1,16 +1,32 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+
 import PostContent from '../../components/PostContent/PostContent';
 import api from '../../utils/api';
-import { useEffect, useState } from 'react';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Spinner from '../../components/Spinner/Spinner';
+import { BreadcrumbsContext } from '../../context/BreadcrumbsContext';
+import { URLS } from '../../utils/constants';
 
 const PostPage = () => {
+  const { setBreadcrumbs } = useContext(BreadcrumbsContext);
   const { postId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [post, setPost] = useState([]);
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    setBreadcrumbs([
+      {
+        label: 'Все посты',
+        url: `/${URLS.posts}`,
+      },
+      {
+        label: post.title || '...',
+        url: `/${URLS.posts}/${postId}`,
+      },
+    ]);
+  }, [setBreadcrumbs, postId, post]);
 
   const reloadPostData = useCallback(() => {
     setIsLoading(true);
@@ -44,7 +60,6 @@ const PostPage = () => {
       {isError && <NotFoundPage />}
     </>
   );
-
 };
 
 export default PostPage;

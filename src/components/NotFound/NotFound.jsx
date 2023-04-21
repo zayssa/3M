@@ -1,13 +1,13 @@
-import React from "react";
-import s from "./NotFound.module.css";
-import notFound from "./image/ic-notfound.svg";
-import { Link } from "react-router-dom";
-import ButtonNotFound from "../ButtonNotFound/ButtonNotFound";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
+
+import s from './NotFound.module.css';
+import notFound from './image/ic-notfound.svg';
 
 const NotFound = ({
   title,
-  children,
-  buttonText = "На главную ",
+  buttonText = 'На главную ',
   buttonAction,
   href,
 }) => {
@@ -15,15 +15,16 @@ const NotFound = ({
     <div className={s.notFound}>
       <img src={notFound} className={s.image} alt="ничего не найдено" />
       <h1 className={s.title}>{title}</h1>
-      {children && children}
-      <ButtonNotFound
-        className={s.button}
+      <Button
+        component={Link}
+        sx={{ mt: 4 }}
         onClick={buttonAction}
-        type="secondary"
-        href={href}
+        color="primary"
+        variant="contained"
+        to={href}
       >
         {buttonText}
-      </ButtonNotFound>
+      </Button>
     </div>
   );
 };

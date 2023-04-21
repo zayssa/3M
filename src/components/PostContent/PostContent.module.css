@@ -1,5 +1,5 @@
 .container {
-    width: 800px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
@@ -9,7 +9,14 @@
 }
 
 .image {
+    width: 200px;
+    height: 300px;
+}
+
+.image img {
     width: inherit;
+    height: inherit;
+    object-fit: fill;
 }
 
 .buttonBack {
@@ -20,3 +27,55 @@
 .buttonBack:hover {
     color: black;
 }
+
+.postHead {
+    margin: 40px 0;
+    padding: 20px;
+    background-color: #add8e6a0;
+    border-radius: 20px;
+}
+
+.title {
+    text-align: center;
+    font-family: 'Pangolin';
+    color: #1976D2;
+    font-size: 40px;
+}
+
+.content {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+
+.headBox {
+    color: #1976D2;
+    display: flex; 
+    justify-content: space-between;
+}
+
+.description {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media (max-width: 700px) {
+    .image {
+        margin-right: 20px !important;
+    }
+}
+
+@media (max-width: 500px) {
+    .content {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .description {
+        margin-top: 60px;
+        text-align: center;
+    }
+} 

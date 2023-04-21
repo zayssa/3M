@@ -90,9 +90,11 @@ const CreatePostForm = forwardRef(({ handleClose, postData, onSave }, ref) => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        width: '70%',
+        maxWidth: 400,
         p: 4,
         pt: 3,
+        // display: { xs: 'block', alignItems: 'center' },
       }}
     >
       <form method="post" onSubmit={handleSubmit(onSubmit)}>
