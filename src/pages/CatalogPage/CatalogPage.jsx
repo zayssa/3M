@@ -12,7 +12,7 @@ import { UserContext } from '../../context/UserContext';
 
 const PostsPage = () => {
   const { posts, handlePostLike } = useContext(PostContext);
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, isLoading } = useContext(UserContext);
   const { setBreadcrumbs } = useContext(BreadcrumbsContext);
   const skeletonArray = skeletonFakeArray.map((el) => (
     <PostSkeleton key={el} />
@@ -30,16 +30,14 @@ const PostsPage = () => {
   return (
     <>
       <PostListHead />
-      {currentUser ? (
-        posts.length === 0 ? (
-          <Container>{skeletonArray}</Container>
-        ) : (
-          <PostList
-            posts={posts}
-            onPostLike={handlePostLike}
-            currentUser={currentUser}
-          />
-        )
+      {isLoading ? (
+        <Container>{skeletonArray}</Container>
+      ) : currentUser ? (
+        <PostList
+          posts={posts}
+          onPostLike={handlePostLike}
+          currentUser={currentUser}
+        />
       ) : (
         <Container>
           <Box pt={5}>
