@@ -5,12 +5,7 @@ import { Button } from '@mui/material';
 import s from './NotFound.module.css';
 import notFound from './image/ic-notfound.svg';
 
-const NotFound = ({
-  title,
-  buttonText = 'На главную ',
-  buttonAction,
-  href,
-}) => {
+const NotFound = ({ title, buttonText = 'На главную', buttonAction, href }) => {
   return (
     <div className={s.notFound}>
       <img src={notFound} className={s.image} alt="ничего не найдено" />

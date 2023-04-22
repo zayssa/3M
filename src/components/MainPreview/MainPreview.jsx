@@ -1,6 +1,8 @@
 import React from 'react';
 import s from './MainPreview.module.css';
 import { Box, Button, Container, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { URLS } from '../../utils/constants';
 
 const MainPreview = () => {
   return (
@@ -29,7 +31,12 @@ const MainPreview = () => {
             >
               Рене Декарт
             </Typography>
-            <Button href="/posts" className={s.button} variant="contained">
+            <Button
+              component={Link}
+              to={`/${URLS.posts}`}
+              className={s.button}
+              variant="contained"
+            >
               Все посты
             </Button>
           </Box>
