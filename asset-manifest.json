@@ -1,17 +1,16 @@
 {
   "files": {
-    "main.css": "/3M/static/css/main.67fc7802.css",
-    "main.js": "/3M/static/js/main.bc2d0602.js",
-    "static/media/bg-image.png": "/3M/static/media/bg-image.30b789f148d0dab51ce5.png",
-    "static/media/blue-PhotoRoom.png-PhotoRoom.png": "/3M/static/media/blue-PhotoRoom.png-PhotoRoom.771f362f5652446f33dc.png",
-    "static/media/ic-notfound.svg": "/3M/static/media/ic-notfound.c1e92a1e84a2edf719038f7bee93711e.svg",
-    "index.html": "/3M/index.html",
-    "static/media/right-arrow.svg": "/3M/static/media/right-arrow.38dab236ebce7caeff6e5202a13723ba.svg",
-    "main.67fc7802.css.map": "/3M/static/css/main.67fc7802.css.map",
-    "main.bc2d0602.js.map": "/3M/static/js/main.bc2d0602.js.map"
+    "main.css": "/3m/static/css/main.3e0f86a1.css",
+    "main.js": "/3m/static/js/main.c2523859.js",
+    "static/media/bg-image.png": "/3m/static/media/bg-image.30b789f148d0dab51ce5.png",
+    "static/media/blue-PhotoRoom.png-PhotoRoom.png": "/3m/static/media/blue-PhotoRoom.png-PhotoRoom.771f362f5652446f33dc.png",
+    "static/media/ic-notfound.svg": "/3m/static/media/ic-notfound.c1e92a1e84a2edf719038f7bee93711e.svg",
+    "index.html": "/3m/index.html",
+    "main.3e0f86a1.css.map": "/3m/static/css/main.3e0f86a1.css.map",
+    "main.c2523859.js.map": "/3m/static/js/main.c2523859.js.map"
   },
   "entrypoints": [
-    "static/css/main.67fc7802.css",
-    "static/js/main.bc2d0602.js"
+    "static/css/main.3e0f86a1.css",
+    "static/js/main.c2523859.js"
   ]
 }
