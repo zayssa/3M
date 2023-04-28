@@ -37,7 +37,7 @@ const RegistrationForm = ({ onDialogKindChange, onClose }) => {
           severity: 'success',
           text: 'Успешно',
           onClose: () => {
-            window.location = '/login';
+            onDialogKindChange(USER_DIALOG_KINDS.authorization);
           },
         });
       })
